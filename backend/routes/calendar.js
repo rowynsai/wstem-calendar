@@ -5,7 +5,7 @@ const calendar = require('../google/googleClient');
 router.get('/events', async (req, res) => {
   try {
     const response = await calendar.events.list({
-      calendarId: process.env.CALENDAR_ID,
+      calendarId: process.env.calendar_id,
       timeMin: (new Date()).toISOString(),
       maxResults: 10,
       singleEvents: true,
