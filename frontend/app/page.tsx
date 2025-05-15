@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,6 +24,29 @@ export default function Home() {
         // Optional: save token or user info in localStorage
       } else {
         alert(`Login failed: ${data.message}`);
+      }
+    } catch (error) {
+      alert("Error connecting to server");
+      console.error(error);
+    }
+  };
+
+  const handleRegister = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        alert("Registration successful!");
+      } else {
+        alert(`Registration failed: ${data.message}`);
       }
     } catch (error) {
       alert("Error connecting to server");
@@ -66,14 +89,20 @@ export default function Home() {
             onClick={handleLogin}
             className="rounded-full bg-blue-500 text-white py-2 px-4 hover:bg-blue-700"
           >
-            Login / Register
+            Login
           </button>
+          <button
+        onClick={handleRegister}
+          className="rounded-full bg-green-500 text-white py-2 px-4 hover:bg-green-700"
+>
+  Register instead
+</button>
         </div>
 
         {/* CALENDAR BUTTON */}
         <a
         className="self-center rounded-full bg-blue-500 text-white transition-colors flex items-center justify-center hover:bg-blue-700 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[220px]"
-        href="http://localhost:5000/calendar"
+        href="/calendar"
         target="_blank"
         rel="noopener noreferrer"
           >
