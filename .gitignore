@@ -36,7 +36,8 @@ credentials.json
 backend/credentials.json
 # vercel
 .vercel
-
+node_modules/
+frontend/node_modules/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
