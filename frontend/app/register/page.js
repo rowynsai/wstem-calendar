@@ -4,27 +4,35 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+const ADMIN_SECRET_KEY = "iloverowyn";
+
 export default function RegisterPage() {
   const router = useRouter();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [preference, setPreference] = useState("A"); // default preference
+  const [preference, setPreference] = useState("A");
+  const [wantsAdmin, setWantsAdmin] = useState(false);
+  const [adminKey, setAdminKey] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleRegister = async () => {
+    const adminStatus = wantsAdmin && adminKey === ADMIN_SECRET_KEY;
+    setIsAdmin(adminStatus);
+
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, preference }),
+        body: JSON.stringify({ name, email, password, preference, isAdmin: adminStatus }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert("Registration successful!");
-        // After successful registration, redirect to calendar page
+        localStorage.setItem("user", JSON.stringify(data.user));
         router.push("/calendar");
       } else {
         alert(`Registration failed: ${data.message}`);
@@ -77,6 +85,7 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             className="p-2 border border-gray-300 rounded"
           />
+
           <label className="mt-4 font-semibold">Preference:</label>
           <select
             value={preference}
@@ -87,6 +96,25 @@ export default function RegisterPage() {
             <option value="B">B</option>
             <option value="C">C</option>
           </select>
+
+          <label className="mt-4 flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={wantsAdmin}
+              onChange={() => setWantsAdmin(!wantsAdmin)}
+            />
+            Register as admin
+          </label>
+
+          {wantsAdmin && (
+            <input
+              type="text"
+              placeholder="Enter Admin Key"
+              value={adminKey}
+              onChange={(e) => setAdminKey(e.target.value)}
+              className="p-2 border border-gray-300 rounded"
+            />
+          )}
 
           <button
             onClick={handleRegister}

@@ -3,7 +3,7 @@
 This is a web application designed to show all upcoming events for UBC women in STEM!
 ## Features
 
-- User login and registration
+- User login/registration, with toggle preferences for event type
 - View calendar events
 - Access calendar without logging in
 - Suggest event absent from calendar

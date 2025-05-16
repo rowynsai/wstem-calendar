@@ -24,8 +24,20 @@ const localizer = dateFnsLocalizer({
 export default function CalendarPage() {
   const [events, setEvents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [user, setUser] = useState(null); // 👈 store user info
 
   useEffect(() => {
+    const fetchUser = () => {
+      try {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (err) {
+        console.error("Error parsing user from localStorage:", err);
+      }
+    };
+
     const fetchEvents = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/calendar");
@@ -47,6 +59,7 @@ export default function CalendarPage() {
       }
     };
 
+    fetchUser();
     fetchEvents();
   }, []);
 
@@ -89,14 +102,17 @@ export default function CalendarPage() {
           />
         </div>
 
-        <div className="mt-6 flex justify-center">
-          <button
-            className="rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Add Task
-          </button>
-        </div>
+        {/* only show this if user is admin */}
+        {user?.isAdmin && (
+          <div className="mt-6 flex justify-center">
+            <button
+              className="rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Add Task
+            </button>
+          </div>
+        )}
       </main>
 
       <TaskModal

@@ -158,7 +158,18 @@ const localizer = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
 function CalendarPage() {
     const [events, setEvents] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isModalOpen, setIsModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [user, setUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null); // 👈 store user info
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const fetchUser = ()=>{
+            try {
+                const storedUser = localStorage.getItem("user");
+                if (storedUser) {
+                    setUser(JSON.parse(storedUser));
+                }
+            } catch (err) {
+                console.error("Error parsing user from localStorage:", err);
+            }
+        };
         const fetchEvents = async ()=>{
             try {
                 const response = await fetch("http://localhost:5000/api/calendar");
@@ -178,6 +189,7 @@ function CalendarPage() {
                 setEvents([]);
             }
         };
+        fetchUser();
         fetchEvents();
     }, []);
     const handleSaveTask = async (task)=>{
@@ -216,7 +228,7 @@ function CalendarPage() {
                         children: "W.STEM Calendar"
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 78,
+                        lineNumber: 91,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -237,15 +249,15 @@ function CalendarPage() {
                             defaultView: "month"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 81,
+                            lineNumber: 94,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 80,
+                        lineNumber: 93,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    user?.isAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "mt-6 flex justify-center",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             className: "rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700",
@@ -253,18 +265,18 @@ function CalendarPage() {
                             children: "Add Task"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 93,
-                            columnNumber: 11
+                            lineNumber: 108,
+                            columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 92,
-                        columnNumber: 9
+                        lineNumber: 107,
+                        columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 77,
+                lineNumber: 90,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TaskModal$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -273,7 +285,7 @@ function CalendarPage() {
                 onSave: handleSaveTask
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 102,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -290,25 +302,25 @@ function CalendarPage() {
                             className: "w-4 h-4"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 115,
+                            lineNumber: 131,
                             columnNumber: 11
                         }, this),
                         "Suggest an event / newsletter !"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 109,
+                    lineNumber: 125,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 108,
+                lineNumber: 124,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/calendar/page.js",
-        lineNumber: 76,
+        lineNumber: 89,
         columnNumber: 5
     }, this);
 }
