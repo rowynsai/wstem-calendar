@@ -1,21 +1,11 @@
 const { google } = require('googleapis');
-require('dotenv').config();
+const path = require('path');
 
-// Create OAuth2 client
-const oauth2Client = new google.auth.OAuth2(
-  process.env.client_id,
-  process.env.client_secret,
-  process.env.redirect_uri
-);
+const auth = new google.auth.GoogleAuth({
+  keyFile: path.join(__dirname, '../credentials.json'), // adjust path if needed
+  scopes: ['https://www.googleapis.com/auth/calendar'],
+});
 
-// Check if we have tokens stored and set them
-if (process.env.token_uri) {
-  oauth2Client.setCredentials({
-    refresh_token: process.env.token_uri
-  });
-}
-
-// Create Google Calendar client
-const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+const calendar = google.calendar({ version: 'v3', auth });
 
 module.exports = calendar;

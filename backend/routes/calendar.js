@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const calendar = require('../google/googleClient');
 
-router.get('/events', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const response = await calendar.events.list({
       calendarId: process.env.calendar_id,
@@ -11,10 +11,12 @@ router.get('/events', async (req, res) => {
       singleEvents: true,
       orderBy: 'startTime',
     });
-    res.json(response.data.items);
+     // response.data.items is an array of events
+     res.json({ events: response.data.items || [] });
+
   } catch (error) {
     console.error(error);
-    res.status(500).send('Failed to fetch events');
+    res.status(500).json({ error: 'Failed to fetch events' });
   }
 });
 
