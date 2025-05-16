@@ -32,12 +32,10 @@ export default function CalendarPage() {
         const data = await response.json();
 
         if (Array.isArray(data.events)) {
-          // Transform Google events to React Big Calendar events format
           const formattedEvents = data.events.map((event) => ({
             title: event.summary || event.title || "No Title",
             start: new Date(event.start?.dateTime || event.start?.date || new Date()),
             end: new Date(event.end?.dateTime || event.end?.date || new Date()),
-            // Optionally you can add other props here
           }));
           setEvents(formattedEvents);
         } else {
@@ -75,31 +73,49 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Your Calendar</h1>
+    <div className="min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] p-6 sm:p-12">
+      <main className="max-w-4xl mx-auto mt-12 bg-white/70 p-6 rounded-2xl shadow-xl backdrop-blur-sm">
+        <h1 className="text-2xl font-bold mb-4 text-center">W.STEM Calendar</h1>
 
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 600 }}
-        views={["month", "week", "day"]}
-        defaultView="month"
-      />
+        <div className="border border-gray-300 rounded overflow-hidden">
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 600 }}
+            views={["month", "week", "day"]}
+            defaultView="month"
+          />
+        </div>
 
-      <button
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Add Task
-      </button>
+        <div className="mt-6 flex justify-center">
+          <button
+            className="rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Add Task
+          </button>
+        </div>
+      </main>
 
       <TaskModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSaveTask}
       />
+
+      <footer className="mt-12 flex justify-center">
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm"
+          href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/globe.svg" alt="Globe icon" className="w-4 h-4" />
+          Suggest an event / newsletter !
+        </a>
+      </footer>
     </div>
   );
 }

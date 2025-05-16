@@ -20,4 +20,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const event = req.body;
+
+    const response = await calendar.events.insert({
+      calendarId: process.env.calendar_id,
+      resource: event,
+    });
+
+    res.status(201).json({ newEvent: response.data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to save event' });
+  }
+});
+
+
 module.exports = router;

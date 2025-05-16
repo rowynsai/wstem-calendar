@@ -1,9 +1,10 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 
 export default function Home() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,32 +21,12 @@ export default function Home() {
       const data = await response.json();
 
       if (response.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         alert("Login successful!");
+        router.push("/calendar"); //go to calendar page
       } else {
         alert(`Login failed: ${data.message}`);
-      }
-    } catch (error) {
-      alert("Error connecting to server");
-      console.error(error);
-    }
-  };
-
-  const handleRegister = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Registration successful!");
-      } else {
-        alert(`Registration failed: ${data.message}`);
       }
     } catch (error) {
       alert("Error connecting to server");
@@ -97,11 +78,12 @@ export default function Home() {
             Login
           </button>
           <button
-            onClick={handleRegister}
-            className="self-center rounded-full bg-sky-600 text-white py-1 px-4 hover:bg-blue-900 w-auto"
-          >
-            Register Instead
-          </button>
+  onClick={() => router.push('/register')}  // go to register page
+  className="self-center rounded-full bg-sky-600 text-white py-1 px-4 hover:bg-blue-900 w-auto"
+>
+  Register Instead
+</button>
+
         </div>
 
         <a
