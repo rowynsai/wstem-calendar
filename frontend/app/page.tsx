@@ -21,7 +21,6 @@ export default function Home() {
 
       if (response.ok) {
         alert("Login successful!");
-        // Optional: save token or user info in localStorage
       } else {
         alert(`Login failed: ${data.message}`);
       }
@@ -40,9 +39,9 @@ export default function Home() {
         },
         body: JSON.stringify({ email, password }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         alert("Registration successful!");
       } else {
@@ -55,72 +54,77 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-[#fdf6e3] text-black grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] p-6 sm:p-12">
+      {/* Logo in top-left corner */}
+      <div className="absolute top-4 left-4">
         <Image
-          src="/header.png"
-          alt="Header Image"
-          width={180}
+          src="/wstemlogo.png"
+          alt="WSTEM Logo"
+          width={120}
           height={38}
           priority
         />
+      </div>
 
-        <ol className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="tracking-[-.01em]">Welcome to Women in STEM UBC-Calendar</li>
-        </ol>
+      {/* Centered, raised main content */}
+      <main className="max-w-md mx-auto mt-20 bg-white/70 p-8 rounded-2xl shadow-xl backdrop-blur-sm flex flex-col gap-6 items-center">
+      <h1 className="text-xl font-bold text-center leading-tight">
+  WELCOME
+  <div className="text-base font-normal">
+    to the UBC Women in STEM Calendar !
+  </div>
+</h1>
 
-        {/* LOGIN FORM */}
-        <div className="flex flex-col gap-2 w-full max-w-xs">
+        <div className="flex flex-col gap-2 w-full">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="p-2 border rounded"
+            className="p-2 border border-gray-300 rounded"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="p-2 border rounded"
+            className="p-2 border border-gray-300 rounded"
           />
           <button
             onClick={handleLogin}
-            className="rounded-full bg-blue-500 text-white py-2 px-4 hover:bg-blue-700"
+            className="rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700"
           >
             Login
           </button>
           <button
-        onClick={handleRegister}
-          className="rounded-full bg-green-500 text-white py-2 px-4 hover:bg-green-700"
->
-  Register instead
-</button>
+            onClick={handleRegister}
+            className="self-center rounded-full bg-sky-600 text-white py-1 px-4 hover:bg-blue-900 w-auto"
+          >
+            Register Instead
+          </button>
         </div>
 
-        {/* CALENDAR BUTTON */}
         <a
-        className="self-center rounded-full bg-blue-500 text-white transition-colors flex items-center justify-center hover:bg-blue-700 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[220px]"
-        href="/calendar"
-        target="_blank"
-        rel="noopener noreferrer"
-          >
+          className="rounded-full bg-blue-500 text-white transition-colors flex items-center justify-center hover:bg-blue-700 font-medium text-sm h-10 px-4 w-auto"
+          href="/calendar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Open Calendar without logging in
         </a>
       </main>
 
-      {/* FOOTER */}
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
-          Submit a comment
-        </a>
+      {/* Footer */}
+      <footer className="mt-12 flex justify-center">
+      <a
+  className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm"
+  href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
+  Suggest an event / newsletter !
+</a>
       </footer>
     </div>
   );

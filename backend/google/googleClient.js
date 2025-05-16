@@ -9,9 +9,9 @@ const oauth2Client = new google.auth.OAuth2(
 );
 
 // Check if we have tokens stored and set them
-if (process.env.GOOGLE_REFRESH_TOKEN) {
+if (process.env.token_uri) {
   oauth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+    refresh_token: process.env.token_uri
   });
 }
 
