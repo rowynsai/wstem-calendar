@@ -45,7 +45,7 @@ export default function RegisterPage() {
 
   return (
     <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] p-6 sm:p-12">
-      <div className="absolute top-4 left-4">
+      <div className="absolute top-6 left-6 cursor-pointer z-50">
         <Image
           src="/wstemlogo.png"
           alt="WSTEM Logo"

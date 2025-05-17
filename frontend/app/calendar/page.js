@@ -8,6 +8,7 @@ import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import TaskModal from "@/components/TaskModal";
+import Link from "next/link";
 
 const locales = {
   "en-US": require("date-fns/locale/en-US"),
@@ -24,7 +25,7 @@ const localizer = dateFnsLocalizer({
 export default function CalendarPage() {
   const [events, setEvents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState(null); // 👈 store user info
+  const [user, setUser] = useState(null); // set user info
 
   useEffect(() => {
     const fetchUser = () => {
@@ -86,8 +87,22 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] p-6 sm:p-12">
-      <main className="max-w-4xl mx-auto mt-12 bg-white/70 p-6 rounded-2xl shadow-xl backdrop-blur-sm">
+    <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] px-6 pt-6 pb-6">
+
+
+      {/* logo clickable to home */}
+      <Link href="/"
+        className="absolute top-6 left-6 cursor-pointer z-50">
+          <img
+            src="/wstemlogo.png"
+            alt="Home"
+            width={120}
+            height={38}
+            className="object-contain"
+          />
+      </Link>
+      <main className="p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm">
+
         <h1 className="text-2xl font-bold mb-4 text-center">W.STEM Calendar</h1>
 
         <div className="border border-gray-300 rounded overflow-hidden">
@@ -109,7 +124,7 @@ export default function CalendarPage() {
               className="rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700"
               onClick={() => setIsModalOpen(true)}
             >
-              Add Task
+              Add Event
             </button>
           </div>
         )}

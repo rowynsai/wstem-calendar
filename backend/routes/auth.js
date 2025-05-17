@@ -9,7 +9,7 @@ const ADMIN_SECRET_KEY = "iloverowyn";
 const hardcodedUser = [
     {
     email: "testeruser@gmail.com",
-    password: "password123",  // For quick testing only! Never store plain passwords in production.
+    password: "password123",
     id: "12345",
     name: "Test User",
     isAdmin: false
@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
       const { email, password } = req.body;
   
       // Check if email matches hardcoded user
-      const hardcoded = hardcodedUsers.find(u => u.email === email);
+      const hardcoded = hardcodedUser.find(u => u.email === email);
 
     if (hardcoded) {
       if (password === hardcoded.password) {
