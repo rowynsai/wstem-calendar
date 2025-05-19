@@ -45,11 +45,11 @@ router.post('/', async (req, res) => {
       },
       start: {
         dateTime: startDateTime,
-        timeZone: 'PST',
+        timeZone: 'America/Los_Angeles',
       },
       end: {
         dateTime: endDateTime,
-        timeZone: 'PST',
+        timeZone: 'America/Los_Angeles',
       },
     };
 
@@ -88,11 +88,11 @@ router.put('/:eventId', async (req, res) => {
       },
       start: {
         dateTime: startDateTime,
-        timeZone: 'PST',
+        timeZone: 'America/Los_Angeles',
       },
       end: {
         dateTime: endDateTime,
-        timeZone: 'PST',
+        timeZone: 'America/Los_Angeles',
       },
     };
 
@@ -110,14 +110,15 @@ router.put('/:eventId', async (req, res) => {
 });
 
 // DELETE an event
+// DELETE an event
 router.delete('/:eventId', async (req, res) => {
   try {
-    //debugging
+    const { eventId } = req.params;
     console.log("Deleting Google Calendar event with ID:", eventId);
 
     await calendar.events.delete({
       calendarId: process.env.calendar_id,
-      eventId: req.params.eventId,
+      eventId,
     });
 
     res.json({ message: 'Event deleted' });
@@ -126,6 +127,7 @@ router.delete('/:eventId', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete event' });
   }
 });
+
 
 
 module.exports = router;

@@ -65,22 +65,12 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
             return;
         }
         const updatedTask = {
-            ...existingTask,
-            summary: title,
+            title,
             description,
-            extendedProperties: {
-                private: {
-                    subject: subject || ""
-                }
-            },
-            start: {
-                dateTime: `${date}T${startTime}`,
-                timeZone: "PST"
-            },
-            end: {
-                dateTime: `${date}T${endTime}`,
-                timeZone: "PST"
-            }
+            date,
+            startTime,
+            endTime,
+            subject
         };
         onSave(updatedTask);
         onClose();
@@ -96,7 +86,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                     children: existingTask ? "View Event Details" : "Add Event"
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 83,
+                    lineNumber: 73,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -107,7 +97,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                     onChange: (e)=>setTitle(e.target.value)
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 87,
+                    lineNumber: 77,
                     columnNumber: 9
                 }, this),
                 !existingTask ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -120,7 +110,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                             children: "Select Subject"
                         }, void 0, false, {
                             fileName: "[project]/components/TaskModal.js",
-                            lineNumber: 100,
+                            lineNumber: 90,
                             columnNumber: 5
                         }, this),
                         subjectOptions.map((option)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -128,20 +118,20 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                                 children: option
                             }, option, false, {
                                 fileName: "[project]/components/TaskModal.js",
-                                lineNumber: 102,
+                                lineNumber: 92,
                                 columnNumber: 7
                             }, this))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 95,
+                    lineNumber: 85,
                     columnNumber: 3
                 }, this) : subject && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                     className: "text-sm text-gray-600 italic",
                     children: subject
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 108,
+                    lineNumber: 98,
                     columnNumber: 14
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -151,7 +141,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                     onChange: (e)=>setDescription(e.target.value)
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 112,
+                    lineNumber: 102,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -161,7 +151,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                     onChange: (e)=>setDate(e.target.value)
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 119,
+                    lineNumber: 109,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -171,7 +161,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                     onChange: (e)=>setStartTime(e.target.value)
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 126,
+                    lineNumber: 116,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -181,7 +171,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                     onChange: (e)=>setEndTime(e.target.value)
                 }, void 0, false, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 133,
+                    lineNumber: 123,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -193,7 +183,7 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                             children: "Close"
                         }, void 0, false, {
                             fileName: "[project]/components/TaskModal.js",
-                            lineNumber: 141,
+                            lineNumber: 131,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -202,24 +192,24 @@ function TaskModal({ isOpen, onClose, onSave, onDelete, existingTask }) {
                             children: "Save"
                         }, void 0, false, {
                             fileName: "[project]/components/TaskModal.js",
-                            lineNumber: 148,
+                            lineNumber: 138,
                             columnNumber: 12
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/TaskModal.js",
-                    lineNumber: 140,
+                    lineNumber: 130,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/TaskModal.js",
-            lineNumber: 82,
+            lineNumber: 72,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/TaskModal.js",
-        lineNumber: 81,
+        lineNumber: 71,
         columnNumber: 5
     }, this);
 }
@@ -249,7 +239,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TaskModal$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/TaskModal.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 ;
-var _s = __turbopack_context__.k.signature();
+var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
@@ -312,7 +302,7 @@ function EventDetailsModal({ event, onClose }) {
                     children: event.title || "No Title"
                 }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 63,
+                    lineNumber: 62,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -321,11 +311,28 @@ function EventDetailsModal({ event, onClose }) {
                             children: "Description:"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 64,
+                            lineNumber: 63,
                             columnNumber: 12
                         }, this),
                         " ",
                         event.description || "No description available"
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/calendar/page.js",
+                    lineNumber: 63,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                            children: "Start:"
+                        }, void 0, false, {
+                            fileName: "[project]/app/calendar/page.js",
+                            lineNumber: 64,
+                            columnNumber: 12
+                        }, this),
+                        " ",
+                        formatDateTime(event.start)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/calendar/page.js",
@@ -335,27 +342,10 @@ function EventDetailsModal({ event, onClose }) {
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                            children: "Start:"
-                        }, void 0, false, {
-                            fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 65,
-                            columnNumber: 12
-                        }, this),
-                        " ",
-                        formatDateTime(event.start)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 65,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
                             children: "End:"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 66,
+                            lineNumber: 65,
                             columnNumber: 12
                         }, this),
                         " ",
@@ -363,7 +353,7 @@ function EventDetailsModal({ event, onClose }) {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 66,
+                    lineNumber: 65,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -377,34 +367,173 @@ function EventDetailsModal({ event, onClose }) {
                         children: "Close"
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 68,
+                        lineNumber: 67,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 67,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/calendar/page.js",
-            lineNumber: 59,
+            lineNumber: 58,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/calendar/page.js",
-        lineNumber: 47,
+        lineNumber: 46,
         columnNumber: 5
     }, this);
 }
 _c = EventDetailsModal;
-function CalendarPage() {
+function SubjectDropdown({ selectedSubjects, setSelectedSubjects }) {
     _s();
+    const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const options = [
+        "Math",
+        "CPSC",
+        "Chem",
+        "Phys",
+        "Eng"
+    ];
+    const subjectColors = {
+        Math: "#f87171",
+        CPSC: "#60a5fa",
+        Chem: "#34d399",
+        Phys: "#fbbf24",
+        Eng: "#a78bfa"
+    };
+    const toggleSubject = (subject)=>{
+        if (subject === 'Select All') {
+            if (selectedSubjects.length === options.length) {
+                setSelectedSubjects([]);
+            } else {
+                setSelectedSubjects(options);
+            }
+        } else {
+            setSelectedSubjects((prev)=>prev.includes(subject) ? prev.filter((s)=>s !== subject) : [
+                    ...prev,
+                    subject
+                ]);
+        }
+    };
+    const isChecked = (subject)=>subject === 'Select All' ? selectedSubjects.length === options.length : selectedSubjects.includes(subject);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "relative inline-block text-left z-50",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    onClick: ()=>setOpen((prev)=>!prev),
+                    className: "inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-sm font-medium text-white hover:bg-blue-900 focus:outline-none",
+                    style: {
+                        backgroundColor: '#3174ad'
+                    },
+                    children: "Subjects"
+                }, void 0, false, {
+                    fileName: "[project]/app/calendar/page.js",
+                    lineNumber: 110,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/calendar/page.js",
+                lineNumber: 109,
+                columnNumber: 7
+            }, this),
+            open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "py-1",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                            className: "flex items-center px-4 py-2 text-sm text-gray-700",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    type: "checkbox",
+                                    className: "mr-2",
+                                    checked: isChecked('Select All'),
+                                    onChange: ()=>toggleSubject('Select All')
+                                }, void 0, false, {
+                                    fileName: "[project]/app/calendar/page.js",
+                                    lineNumber: 123,
+                                    columnNumber: 15
+                                }, this),
+                                "Select All"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/calendar/page.js",
+                            lineNumber: 122,
+                            columnNumber: 13
+                        }, this),
+                        options.map((option)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "flex items-center px-4 py-2 text-sm text-gray-700",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "checkbox",
+                                        className: "mr-2",
+                                        checked: isChecked(option),
+                                        onChange: ()=>toggleSubject(option)
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/calendar/page.js",
+                                        lineNumber: 136,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "inline-block w-3 h-3 rounded-full mr-2",
+                                        style: {
+                                            backgroundColor: subjectColors[option]
+                                        }
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/calendar/page.js",
+                                        lineNumber: 142,
+                                        columnNumber: 17
+                                    }, this),
+                                    option
+                                ]
+                            }, option, true, {
+                                fileName: "[project]/app/calendar/page.js",
+                                lineNumber: 132,
+                                columnNumber: 15
+                            }, this))
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/calendar/page.js",
+                    lineNumber: 121,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/calendar/page.js",
+                lineNumber: 120,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/app/calendar/page.js",
+        lineNumber: 108,
+        columnNumber: 5
+    }, this);
+}
+_s(SubjectDropdown, "xG1TONbKtDWtdOTrXaTAsNhPg/Q=");
+_c1 = SubjectDropdown;
+function CalendarPage() {
+    _s1();
     const [selectedEvent, setSelectedEvent] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [events, setEvents] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isTaskModalOpen, setIsTaskModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // for Add Event (admin only)
     const [isDetailsModalOpen, setIsDetailsModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // for read-only event details
     const [user, setUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [selectedSubjects, setSelectedSubjects] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
+        "Math",
+        "CPSC",
+        "Chem",
+        "Phys",
+        "Eng"
+    ]);
+    const filteredEvents = events.filter((event)=>{
+        // show event if subject is null/undefined OR subject is in selectedSubjects
+        return !event.subject || selectedSubjects.includes(event.subject);
+    });
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CalendarPage.useEffect": ()=>{
             const fetchUser = {
@@ -432,7 +561,8 @@ function CalendarPage() {
                                         title: event.summary || event.title || "No Title",
                                         start: new Date(event.start?.dateTime || event.start?.date || new Date()),
                                         end: new Date(event.end?.dateTime || event.end?.date || new Date()),
-                                        description: event.description || ""
+                                        description: event.description || "",
+                                        subject: event.extendedProperties?.private?.subject || null
                                     })
                             }["CalendarPage.useEffect.fetchEvents.formattedEvents"]);
                             setEvents(formattedEvents);
@@ -450,13 +580,22 @@ function CalendarPage() {
         }
     }["CalendarPage.useEffect"], []);
     const handleSaveTask = async (task)=>{
+        console.log("handleSaveTask triggered", task);
         try {
+            const postData = {
+                title: task.summary || task.title || "No Title",
+                description: task.description || "",
+                date: task.date,
+                startTime: task.startTime,
+                endTime: task.endTime,
+                subject: task.subject || null
+            };
             const response = await fetch("http://localhost:5000/api/calendar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(task)
+                body: JSON.stringify(postData)
             });
             const data = await response.json();
             if (data.newEvent) {
@@ -466,8 +605,9 @@ function CalendarPage() {
                     start: new Date(data.newEvent.start?.dateTime || data.newEvent.start?.date || new Date()),
                     end: new Date(data.newEvent.end?.dateTime || data.newEvent.end?.date || new Date()),
                     description: data.newEvent.description || "",
-                    extendedProperties: data.newEvent.extendedProperties || {}
+                    subject: data.newEvent.extendedProperties?.private?.subject || null
                 };
+                console.log("Adding new event to state:", newEvent);
                 setEvents((prev)=>[
                         ...prev,
                         newEvent
@@ -484,7 +624,7 @@ function CalendarPage() {
     };
     // Open add event modal for admins
     const openAddEventModal = ()=>{
-        setSelectedEvent(null); // no event pre-selected
+        setSelectedEvent(null);
         setIsTaskModalOpen(true);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -501,30 +641,54 @@ function CalendarPage() {
                     className: "object-contain"
                 }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 164,
+                    lineNumber: 261,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 163,
+                lineNumber: 260,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
                 className: "p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold mb-4 text-center",
-                        children: "W.STEM Calendar"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                className: "text-2xl font-bold text-center w-full",
+                                children: "W.STEM Calendar"
+                            }, void 0, false, {
+                                fileName: "[project]/app/calendar/page.js",
+                                lineNumber: 272,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute top-6 right-6",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SubjectDropdown, {
+                                    selectedSubjects: selectedSubjects,
+                                    setSelectedSubjects: setSelectedSubjects
+                                }, void 0, false, {
+                                    fileName: "[project]/app/calendar/page.js",
+                                    lineNumber: 274,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/calendar/page.js",
+                                lineNumber: 273,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 175,
+                        lineNumber: 271,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "border border-gray-300 rounded overflow-hidden",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$big$2d$calendar$2f$dist$2f$react$2d$big$2d$calendar$2e$esm$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Calendar"], {
                             localizer: localizer,
-                            events: events,
+                            events: filteredEvents,
                             startAccessor: "start",
                             endAccessor: "end",
                             style: {
@@ -536,15 +700,44 @@ function CalendarPage() {
                                 "day"
                             ],
                             defaultView: "month",
-                            onSelectEvent: handleSelectEvent
+                            onSelectEvent: handleSelectEvent,
+                            eventPropGetter: (event)=>{
+                                let bgColor = "#3174ad"; // default blue
+                                switch(event.subject){
+                                    case "Math":
+                                        bgColor = "#f87171"; // red
+                                        break;
+                                    case "CPSC":
+                                        bgColor = "#60a5fa"; // blue
+                                        break;
+                                    case "Chem":
+                                        bgColor = "#34d399"; // green
+                                        break;
+                                    case "Phys":
+                                        bgColor = "#fbbf24"; // yellow
+                                        break;
+                                    case "Eng":
+                                        bgColor = "#a78bfa"; // purple
+                                        break;
+                                }
+                                return {
+                                    style: {
+                                        backgroundColor: bgColor,
+                                        borderRadius: "6px",
+                                        color: "white",
+                                        border: "none",
+                                        padding: "4px 8px"
+                                    }
+                                };
+                            }
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 178,
+                            lineNumber: 281,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 177,
+                        lineNumber: 280,
                         columnNumber: 9
                     }, this),
                     user && user.isAdmin === true && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -555,18 +748,18 @@ function CalendarPage() {
                             children: "Add Event"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 193,
+                            lineNumber: 326,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 192,
+                        lineNumber: 325,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 173,
+                lineNumber: 270,
                 columnNumber: 7
             }, this),
             isDetailsModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EventDetailsModal, {
@@ -577,7 +770,7 @@ function CalendarPage() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 205,
+                lineNumber: 337,
                 columnNumber: 9
             }, this),
             isTaskModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TaskModal$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -587,7 +780,7 @@ function CalendarPage() {
                 existingTask: selectedEvent
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 216,
+                lineNumber: 347,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -604,33 +797,34 @@ function CalendarPage() {
                             className: "w-4 h-4"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 231,
+                            lineNumber: 362,
                             columnNumber: 11
                         }, this),
                         "Suggest an event / newsletter !"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 225,
+                    lineNumber: 356,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 224,
+                lineNumber: 355,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/calendar/page.js",
-        lineNumber: 160,
+        lineNumber: 259,
         columnNumber: 5
     }, this);
 }
-_s(CalendarPage, "Bd+2Vr0JRfh8cf5x2MmFS1z4fi4=");
-_c1 = CalendarPage;
-var _c, _c1;
+_s1(CalendarPage, "KLubY7WUliil3DlQolxNMibdD/Y=");
+_c2 = CalendarPage;
+var _c, _c1, _c2;
 __turbopack_context__.k.register(_c, "EventDetailsModal");
-__turbopack_context__.k.register(_c1, "CalendarPage");
+__turbopack_context__.k.register(_c1, "SubjectDropdown");
+__turbopack_context__.k.register(_c2, "CalendarPage");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }

@@ -38,7 +38,6 @@ function formatDateTime(isoDate) {
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-
 // Read-only modal for event details
 function EventDetailsModal({ event, onClose }) {
   if (!event) return null;
@@ -72,12 +71,100 @@ function EventDetailsModal({ event, onClose }) {
   );
 }
 
+function SubjectDropdown({ selectedSubjects, setSelectedSubjects }) {
+  const [open, setOpen] = useState(false);
+  const options = ["Math", "CPSC", "Chem", "Phys", "Eng"];
+
+  const subjectColors = {
+    Math: "#f87171",  // red
+    CPSC: "#60a5fa",  // blue
+    Chem: "#34d399",  // green
+    Phys: "#fbbf24",  // yellow
+    Eng: "#a78bfa",   // purple
+  };
+
+  const toggleSubject = (subject) => {
+    if (subject === 'Select All') {
+      if (selectedSubjects.length === options.length) {
+        setSelectedSubjects([]);
+      } else {
+        setSelectedSubjects(options);
+      }
+    } else {
+      setSelectedSubjects((prev) =>
+        prev.includes(subject)
+          ? prev.filter((s) => s !== subject)
+          : [...prev, subject]
+      );
+    }
+  };
+
+  const isChecked = (subject) =>
+    subject === 'Select All'
+      ? selectedSubjects.length === options.length
+      : selectedSubjects.includes(subject);
+
+  return (
+    <div className="relative inline-block text-left z-50">
+      <div>
+        <button
+          onClick={() => setOpen((prev) => !prev)}
+          className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-sm font-medium text-white hover:bg-blue-900 focus:outline-none"
+          style={{ backgroundColor: '#3174ad' }}
+        >
+          Subjects
+        </button>
+      </div>
+
+      {open && (
+        <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div className="py-1">
+            <label className="flex items-center px-4 py-2 text-sm text-gray-700">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={isChecked('Select All')}
+                onChange={() => toggleSubject('Select All')}
+              />
+              Select All
+            </label>
+            {options.map((option) => (
+              <label
+                key={option}
+                className="flex items-center px-4 py-2 text-sm text-gray-700"
+              >
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={isChecked(option)}
+                  onChange={() => toggleSubject(option)}
+                />
+                <span
+                  className="inline-block w-3 h-3 rounded-full mr-2"
+                  style={{ backgroundColor: subjectColors[option] }}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function CalendarPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [events, setEvents] = useState([]);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false); // for Add Event (admin only)
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false); // for read-only event details
   const [user, setUser] = useState(null);
+  const [selectedSubjects, setSelectedSubjects] = useState(["Math", "CPSC", "Chem", "Phys", "Eng"]);
+
+  const filteredEvents = events.filter(event => {
+    // show event if subject is null/undefined OR subject is in selectedSubjects
+    return !event.subject || selectedSubjects.includes(event.subject);
+  });
 
   useEffect(() => {
     const fetchUser = () => {
@@ -104,6 +191,7 @@ export default function CalendarPage() {
             start: new Date(event.start?.dateTime || event.start?.date || new Date()),
             end: new Date(event.end?.dateTime || event.end?.date || new Date()),
             description: event.description || "",
+            subject: event.extendedProperties?.private?.subject || null,
           }));
           setEvents(formattedEvents);
         } else {
@@ -120,11 +208,21 @@ export default function CalendarPage() {
   }, []);
 
   const handleSaveTask = async (task) => {
+    console.log("handleSaveTask triggered", task);
     try {
+      const postData = {
+        title: task.summary || task.title || "No Title",
+        description: task.description || "",
+        date: task.date,
+        startTime: task.startTime, // "14:30"
+        endTime: task.endTime,     // "15:30"
+        subject: task.subject || null, // <-- make sure TaskModal sends this if you want subject saved
+      };
+
       const response = await fetch("http://localhost:5000/api/calendar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(task),
+        body: JSON.stringify(postData),
       });
 
       const data = await response.json();
@@ -135,8 +233,9 @@ export default function CalendarPage() {
           start: new Date(data.newEvent.start?.dateTime || data.newEvent.start?.date || new Date()),
           end: new Date(data.newEvent.end?.dateTime || data.newEvent.end?.date || new Date()),
           description: data.newEvent.description || "",
-          extendedProperties: data.newEvent.extendedProperties || {},
+          subject: data.newEvent.extendedProperties?.private?.subject || null,
         };
+        console.log("Adding new event to state:", newEvent);
         setEvents((prev) => [...prev, newEvent]);
       }
     } catch (err) {
@@ -152,14 +251,12 @@ export default function CalendarPage() {
 
   // Open add event modal for admins
   const openAddEventModal = () => {
-    setSelectedEvent(null); // no event pre-selected
+    setSelectedEvent(null);
     setIsTaskModalOpen(true);
   };
 
   return (
     <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] px-6 pt-6 pb-6">
-
-      {/* logo clickable to home */}
       <Link href="/" className="absolute top-6 left-6 cursor-pointer z-50">
         <img
           src="/wstemlogo.png"
@@ -171,23 +268,59 @@ export default function CalendarPage() {
       </Link>
 
       <main className="p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm">
-
-        <h1 className="text-2xl font-bold mb-4 text-center">W.STEM Calendar</h1>
-
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold text-center w-full">W.STEM Calendar</h1>
+          <div className="absolute top-6 right-6">
+            <SubjectDropdown
+              selectedSubjects={selectedSubjects}
+              setSelectedSubjects={setSelectedSubjects}
+            />
+          </div>
+        </div>
         <div className="border border-gray-300 rounded overflow-hidden">
           <Calendar
             localizer={localizer}
-            events={events}
+            events={filteredEvents}
             startAccessor="start"
             endAccessor="end"
             style={{ height: 600 }}
             views={["month", "week", "day"]}
             defaultView="month"
             onSelectEvent={handleSelectEvent}
+            eventPropGetter={(event) => {
+              let bgColor = "#3174ad"; // default blue
+
+              switch (event.subject) {
+                case "Math":
+                  bgColor = "#f87171"; // red
+                  break;
+                case "CPSC":
+                  bgColor = "#60a5fa"; // blue
+                  break;
+                case "Chem":
+                  bgColor = "#34d399"; // green
+                  break;
+                case "Phys":
+                  bgColor = "#fbbf24"; // yellow
+                  break;
+                case "Eng":
+                  bgColor = "#a78bfa"; // purple
+                  break;
+              }
+
+              return {
+                style: {
+                  backgroundColor: bgColor,
+                  borderRadius: "6px",
+                  color: "white",
+                  border: "none",
+                  padding: "4px 8px",
+                },
+              };
+            }}
           />
         </div>
 
-        {/* only show Add Event button if user is admin */}
         {user && user.isAdmin === true && (
           <div className="mt-6 flex justify-center">
             <button
@@ -200,7 +333,6 @@ export default function CalendarPage() {
         )}
       </main>
 
-      {/* read-only event details modal */}
       {isDetailsModalOpen && (
         <EventDetailsModal
           event={selectedEvent}
@@ -211,7 +343,6 @@ export default function CalendarPage() {
         />
       )}
 
-      {/* admin-only add event modal */}
       {isTaskModalOpen && (
         <TaskModal
           isOpen={isTaskModalOpen}

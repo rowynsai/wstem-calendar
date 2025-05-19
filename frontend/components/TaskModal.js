@@ -53,22 +53,12 @@ export default function TaskModal({
     }
 
     const updatedTask = {
-      ...existingTask,
-      summary: title,
+      title,           // 
       description,
-      extendedProperties: {
-        private: {
-          subject: subject || "",
-        },
-      },
-      start: {
-        dateTime: `${date}T${startTime}`,
-        timeZone: "PST",
-      },
-      end: {
-        dateTime: `${date}T${endTime}`,
-        timeZone: "PST",
-      },
+      date,            // "YYYY-MM-DD"
+      startTime,       // "HH:mm"
+      endTime,         // "HH:mm"
+      subject,         // string or empty
     };
 
     onSave(updatedTask);
