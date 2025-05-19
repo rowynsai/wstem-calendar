@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const calendar = require('../google/googleClient');
 
+// GET upcoming events
 router.get('/', async (req, res) => {
   try {
     const response = await calendar.events.list({
@@ -11,7 +12,10 @@ router.get('/', async (req, res) => {
       singleEvents: true,
       orderBy: 'startTime',
     });
-    // response.data.items is an array of events
+
+    const events = response.data.items || [];
+    console.log("Fetched events:", events);
+    
     res.json({ events: response.data.items || [] });
   } catch (error) {
     console.error(error);
@@ -19,6 +23,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// POST new event
 router.post('/', async (req, res) => {
   try {
     const { title, description, date, startTime, endTime } = req.body;
@@ -27,21 +32,19 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: "Missing date, start time, or end time" });
     }
 
-    // Combine date and times into ISO strings
     const startDateTime = new Date(`${date}T${startTime}:00`).toISOString();
     const endDateTime = new Date(`${date}T${endTime}:00`).toISOString();
 
-    // Create Google Calendar event resource object
     const event = {
       summary: title || 'No Title',
       description: description || '',
       start: {
         dateTime: startDateTime,
-        timeZone: 'PST', // or your preferred timezone like 'America/New_York'
+        timeZone: 'PST',
       },
       end: {
         dateTime: endDateTime,
-        timeZone: 'PST', // keep consistent timezone
+        timeZone: 'PST',
       },
     };
 
@@ -56,5 +59,63 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to save event', details: error.message });
   }
 });
+
+// PUT update an existing event
+router.put('/:eventId', async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { title, description, date, startTime, endTime } = req.body;
+
+    if (!date || !startTime || !endTime) {
+      return res.status(400).json({ error: "Missing date, start time, or end time" });
+    }
+
+    const startDateTime = new Date(`${date}T${startTime}:00`).toISOString();
+    const endDateTime = new Date(`${date}T${endTime}:00`).toISOString();
+
+    const updatedEvent = {
+      summary: title || 'No Title',
+      description: description || '',
+      start: {
+        dateTime: startDateTime,
+        timeZone: 'PST',
+      },
+      end: {
+        dateTime: endDateTime,
+        timeZone: 'PST',
+      },
+    };
+
+    const response = await calendar.events.update({
+      calendarId: process.env.calendar_id,
+      eventId,
+      resource: updatedEvent,
+    });
+
+    res.json({ updatedEvent: response.data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update event', details: error.message });
+  }
+});
+
+// DELETE an event
+router.delete('/:eventId', async (req, res) => {
+  try {
+    //debugging
+    console.log("Deleting Google Calendar event with ID:", eventId);
+
+    await calendar.events.delete({
+      calendarId: process.env.calendar_id,
+      eventId: req.params.eventId,
+    });
+
+    res.json({ message: 'Event deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to delete event' });
+  }
+});
+
 
 module.exports = router;
