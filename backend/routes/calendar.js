@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     const events = response.data.items || [];
     console.log("Fetched events:", events);
-    
+
     res.json({ events: response.data.items || [] });
   } catch (error) {
     console.error(error);
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 // POST new event
 router.post('/', async (req, res) => {
   try {
-    const { title, description, date, startTime, endTime } = req.body;
+    const { title, description, date, startTime, endTime, subject} = req.body;
 
     if (!date || !startTime || !endTime) {
       return res.status(400).json({ error: "Missing date, start time, or end time" });
@@ -38,6 +38,11 @@ router.post('/', async (req, res) => {
     const event = {
       summary: title || 'No Title',
       description: description || '',
+      extendedProperties: {
+        private: {
+          subject: subject || '',
+        }
+      },
       start: {
         dateTime: startDateTime,
         timeZone: 'PST',
@@ -64,7 +69,7 @@ router.post('/', async (req, res) => {
 router.put('/:eventId', async (req, res) => {
   try {
     const { eventId } = req.params;
-    const { title, description, date, startTime, endTime } = req.body;
+    const { title, description, date, startTime, endTime, subject} = req.body;
 
     if (!date || !startTime || !endTime) {
       return res.status(400).json({ error: "Missing date, start time, or end time" });
@@ -76,6 +81,11 @@ router.put('/:eventId', async (req, res) => {
     const updatedEvent = {
       summary: title || 'No Title',
       description: description || '',
+      extendedProperties: {
+        private: {
+          subject: subject || '',  // store subject here
+        }
+      },
       start: {
         dateTime: startDateTime,
         timeZone: 'PST',

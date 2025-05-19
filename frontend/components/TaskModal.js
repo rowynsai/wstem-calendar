@@ -14,12 +14,15 @@ export default function TaskModal({
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [subject, setSubject] = useState("");
+  const subjectOptions = ["Math", "CPSC", "Chem", "Phys", "Eng"];
 
   useEffect(() => {
     if (existingTask) {
       setTitle(existingTask.summary || existingTask.title || "");
       setDescription(existingTask.description || "");
-      
+      setSubject(existingTask.extendedProperties?.private?.subject || "");
+
       const startDateTime = existingTask.start?.dateTime || existingTask.start?.date;
       const endDateTime = existingTask.end?.dateTime || existingTask.end?.date;
 
@@ -36,6 +39,7 @@ export default function TaskModal({
     } else {
       setTitle("");
       setDescription("");
+      setSubject("");
       setDate("");
       setStartTime("");
       setEndTime("");
@@ -52,25 +56,23 @@ export default function TaskModal({
       ...existingTask,
       summary: title,
       description,
+      extendedProperties: {
+        private: {
+          subject: subject || "",
+        },
+      },
       start: {
         dateTime: `${date}T${startTime}`,
-        timeZone: "UTC",
+        timeZone: "PST",
       },
       end: {
         dateTime: `${date}T${endTime}`,
-        timeZone: "UTC",
+        timeZone: "PST",
       },
     };
 
     onSave(updatedTask);
     onClose();
-  };
-
-  const handleDelete = () => {
-    if (existingTask && onDelete) {
-      onDelete(existingTask.id);
-      onClose();
-    }
   };
 
   if (!isOpen) return null;
@@ -89,6 +91,23 @@ export default function TaskModal({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        {!existingTask ? (
+  <select
+    className="w-full border p-2 rounded mb-2"
+    value={subject}
+    onChange={(e) => setSubject(e.target.value)}
+  >
+    <option value="">Select Subject</option>
+    {subjectOptions.map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
+) : (
+  subject && <span className="text-sm text-gray-600 italic">{subject}</span>
+)}
+
 
         <textarea
           placeholder="Description"
@@ -126,12 +145,12 @@ export default function TaskModal({
             Close
           </button>
 
-          {/* remove so users cant edit events <button
+           <button
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
             onClick={handleSubmit}
           >
             Save
-          </button> */}
+          </button>
         </div>
       </div>
     </div>

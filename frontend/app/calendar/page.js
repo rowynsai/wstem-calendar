@@ -135,6 +135,7 @@ export default function CalendarPage() {
           start: new Date(data.newEvent.start?.dateTime || data.newEvent.start?.date || new Date()),
           end: new Date(data.newEvent.end?.dateTime || data.newEvent.end?.date || new Date()),
           description: data.newEvent.description || "",
+          extendedProperties: data.newEvent.extendedProperties || {},
         };
         setEvents((prev) => [...prev, newEvent]);
       }
@@ -199,7 +200,7 @@ export default function CalendarPage() {
         )}
       </main>
 
-      {/* Read-only event details modal */}
+      {/* read-only event details modal */}
       {isDetailsModalOpen && (
         <EventDetailsModal
           event={selectedEvent}
