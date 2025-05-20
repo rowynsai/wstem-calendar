@@ -477,8 +477,8 @@
     height: calc(var(--spacing) * 24);
   }
 
-  .h-\[800px\] {
-    height: 800px;
+  .h-32 {
+    height: calc(var(--spacing) * 32);
   }
 
   .min-h-screen {
@@ -715,6 +715,10 @@
 
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
+  }
+
+  .pl-2 {
+    padding-left: calc(var(--spacing) * 2);
   }
 
   .text-center {

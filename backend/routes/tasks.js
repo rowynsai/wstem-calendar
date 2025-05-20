@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get User's Tasks
+// Get User's Events
 router.get('/:userId', async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.params.userId });

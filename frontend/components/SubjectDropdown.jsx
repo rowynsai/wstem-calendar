@@ -1,6 +1,6 @@
 export default function SubjectDropdown({ selectedSubjects, setSelectedSubjects }) {
     const [open, setOpen] = useState(false);
-    const options = ["Math", "CPSC", "Chem", "Phys", "Eng"];
+    const options = ["Math", "CPSC", "Chem", "Biol", "Phys", "Eng"];
   
     const toggleSubject = (subject) => {
       if (subject === "Select All") {

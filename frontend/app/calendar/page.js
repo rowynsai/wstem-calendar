@@ -22,23 +22,33 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+// subject colours
+const subjectColors = {
+  Math: "#f87171",  // red
+  CPSC: "#60a5fa",  // blue
+  Chem: "#ffa500",  // orange
+  Biol: "#34d399",  // green
+  Phys: "#fbbf24",  // yellow
+  APSC: "#a78bfa",   // purple
+};
+
 function formatDateTime(isoDate) {
   if (!isoDate) return "";
   const d = new Date(isoDate);
 
-  // Format date as dd/mm/yyyy
+  // dd/mm/yyyy
   const day = String(d.getDate()).padStart(2, "0");
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const year = d.getFullYear();
 
-  // Format time as HH:mm (24-hour clock, no seconds)
+  // time formatted as hh:mm, 24 hr clock
   const hours = String(d.getHours()).padStart(2, "0");
   const minutes = String(d.getMinutes()).padStart(2, "0");
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-// Read-only modal for event details
+// read-only modal for event details (no edits)
 function EventDetailsModal({ event, onClose }) {
   if (!event) return null;
 
@@ -71,21 +81,14 @@ function EventDetailsModal({ event, onClose }) {
   );
 }
 
-function SubjectDropdown({ selectedSubjects, setSelectedSubjects }) {
+//dropdown subject choices
+function SubjectDropdown({ selectedSubjects, setSelectedSubjects, user }) {
   const [open, setOpen] = useState(false);
-  const options = ["Math", "CPSC", "Chem", "Phys", "Eng"];
-
-  const subjectColors = {
-    Math: "#f87171",  // red
-    CPSC: "#60a5fa",  // blue
-    Chem: "#34d399",  // green
-    Phys: "#fbbf24",  // yellow
-    Eng: "#a78bfa",   // purple
-  };
+  const options = Object.keys(subjectColors);
 
   const toggleSubject = (subject) => {
     if (subject === 'Select All') {
-      if (selectedSubjects.length === options.length) {
+      if (selectedSubjects.lAPSCth === options.lAPSCth) {
         setSelectedSubjects([]);
       } else {
         setSelectedSubjects(options);
@@ -97,11 +100,22 @@ function SubjectDropdown({ selectedSubjects, setSelectedSubjects }) {
           : [...prev, subject]
       );
     }
+    // if user get their saved pref
+    if (user) {
+      fetch(`http://localhost:5000/api/preferences`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          preferences: { subjects: newSelectedSubjects },
+        }),
+      }).catch((err) => console.error("Failed to save preferences", err));
+    }
   };
 
   const isChecked = (subject) =>
     subject === 'Select All'
-      ? selectedSubjects.length === options.length
+      ? selectedSubjects.lAPSCth === options.lAPSCth
       : selectedSubjects.includes(subject);
 
   return (
@@ -159,12 +173,13 @@ export default function CalendarPage() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false); // for Add Event (admin only)
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false); // for read-only event details
   const [user, setUser] = useState(null);
-  const [selectedSubjects, setSelectedSubjects] = useState(["Math", "CPSC", "Chem", "Phys", "Eng"]);
+  const [selectedSubjects, setSelectedSubjects] = useState(["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"]);
 
-  const filteredEvents = events.filter(event => {
-    // show event if subject is null/undefined OR subject is in selectedSubjects
-    return !event.subject || selectedSubjects.includes(event.subject);
-  });
+  // helps w null (no subject) case
+  const filteredEvents = events.filter(
+    (event) => !event.subject || selectedSubjects.includes(event.subject)
+  );
+
 
   useEffect(() => {
     const fetchUser = () => {
@@ -182,6 +197,10 @@ export default function CalendarPage() {
       try {
         const response = await fetch("http://localhost:5000/api/calendar");
         const data = await response.json();
+        
+        if (data?.preferences?.subjects) {
+          setSelectedSubjects(data.preferences.subjects);
+        }
 
         if (Array.isArray(data.events)) {
           // Keep description as well for modal display
@@ -235,7 +254,6 @@ export default function CalendarPage() {
           description: data.newEvent.description || "",
           subject: data.newEvent.extendedProperties?.private?.subject || null,
         };
-        console.log("Adding new event to state:", newEvent);
         setEvents((prev) => [...prev, newEvent]);
       }
     } catch (err) {
@@ -247,12 +265,6 @@ export default function CalendarPage() {
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setIsDetailsModalOpen(true);
-  };
-
-  // Open add event modal for admins
-  const openAddEventModal = () => {
-    setSelectedEvent(null);
-    setIsTaskModalOpen(true);
   };
 
   return (
@@ -274,6 +286,7 @@ export default function CalendarPage() {
             <SubjectDropdown
               selectedSubjects={selectedSubjects}
               setSelectedSubjects={setSelectedSubjects}
+              user={user}
             />
           </div>
         </div>
@@ -298,12 +311,15 @@ export default function CalendarPage() {
                   bgColor = "#60a5fa"; // blue
                   break;
                 case "Chem":
+                  bgColor = "#ffa500";  // orange
+                  break;
+                case "Biol":
                   bgColor = "#34d399"; // green
                   break;
                 case "Phys":
                   bgColor = "#fbbf24"; // yellow
                   break;
-                case "Eng":
+                case "APSC":
                   bgColor = "#a78bfa"; // purple
                   break;
               }
@@ -321,11 +337,11 @@ export default function CalendarPage() {
           />
         </div>
 
-        {user && user.isAdmin === true && (
+        {user?.isAdmin === true && (
           <div className="mt-6 flex justify-center">
             <button
               className="rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700"
-              onClick={openAddEventModal}
+              onClick={() => setIsTaskModalOpen(true)}
             >
               Add Event
             </button>

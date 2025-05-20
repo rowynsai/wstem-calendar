@@ -15,7 +15,7 @@ export default function TaskModal({
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [subject, setSubject] = useState("");
-  const subjectOptions = ["Math", "CPSC", "Chem", "Phys", "Eng"];
+  const subjectOptions = ["Math", "CPSC", "Chem", "Biol", "Phys", "Eng"];
 
   useEffect(() => {
     if (existingTask) {

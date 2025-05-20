@@ -110,7 +110,6 @@ router.put('/:eventId', async (req, res) => {
 });
 
 // DELETE an event
-// DELETE an event
 router.delete('/:eventId', async (req, res) => {
   try {
     const { eventId } = req.params;

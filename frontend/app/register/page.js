@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const ADMIN_SECRET_KEY = "iloverowyn";
+const allSubjects = ["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"];
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [preference, setPreference] = useState("A");
+  const [preferences, setPreferences] = useState(allSubjects);
   const [wantsAdmin, setWantsAdmin] = useState(false);
   const [adminKey, setAdminKey] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -25,7 +26,7 @@ export default function RegisterPage() {
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, preference, isAdmin: adminStatus }),
+        body: JSON.stringify({ name, email, password, preferences: preference, isAdmin: adminStatus }),
       });
 
       const data = await response.json();
@@ -86,16 +87,26 @@ export default function RegisterPage() {
             className="p-2 border border-gray-300 rounded"
           />
 
-          <label className="mt-4 font-semibold">Preference:</label>
-          <select
-            value={preference}
-            onChange={(e) => setPreference(e.target.value)}
-            className="p-2 border border-gray-300 rounded"
-          >
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-          </select>
+          <label className="mt-4 font-semibold">Subject preferences</label>
+          <div className="flex flex-col gap-2 pl-2">
+  {allSubjects.map((subject) => (
+    <label key={subject} className="flex items-center gap-2">
+      <input
+        type="checkbox"
+        value={subject}
+        checked={preferences.includes(subject)}
+        onChange={(e) => {
+          if (e.target.checked) {
+            setPreferences([...preferences, subject]);
+          } else {
+            setPreferences(preferences.filter((s) => s !== subject));
+          }
+        }}
+      />
+      {subject}
+    </label>
+  ))}
+</div>
 
           <label className="mt-4 flex items-center gap-2">
             <input

@@ -23,6 +23,14 @@ export default function Home() {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
+
+        //check if admin
+        if (data.user?.isAdmin || data.user?.role == "admin") {
+          localStorage.setItem("authToken", "admin");
+        } else {
+          localStorage.removeItem("authToken");
+        }
+        
         alert("Login successful!");
         router.push("/calendar"); //go to calendar page
       } else {

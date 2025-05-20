@@ -12,6 +12,7 @@ const hardcodedUser = [
     password: "password123",
     id: "12345",
     name: "Test User",
+    preference: { "Math": true, "CPSC": false },
     isAdmin: false
   },
   {
@@ -19,9 +20,21 @@ const hardcodedUser = [
     password: "password123",
     id: "67890",
     name: "Admin User",
+    preference: { "Math": true, "CPSC": false },
     isAdmin: true,
   },
 ];
+
+// try parsing pref?
+function parsePreference(preference) {
+  if (!preference) return {};
+  if (typeof preference === 'object') return preference;
+  try {
+    return JSON.parse(preference);
+  } catch {
+    return {};
+  }
+}
 
 // User reg
 router.post('/register', async (req, res) => {
@@ -31,19 +44,19 @@ router.post('/register', async (req, res) => {
       const existingUser = await User.findOne({ email });
       if (existingUser) return res.status(400).json({ message: 'User already exists' });
         
-      if (isAdmin) {
-        if (adminKey !== ADMIN_SECRET_KEY) {
-          return res.status(403).json({ message: 'Invalid admin key' });
-        }
+      // if they (wrongly!) try to be admin
+      if (isAdmin && adminKey !== ADMIN_SECRET_KEY) {
+        return res.status(403).json({ message: 'Invalid admin key' });
       }
       // Create user - hash password, save name and preference
       const hashedPassword = await bcrypt.hash(password, 10);
-  
+      const preferencesParsed = parsePreference(preference);
+
       const newUser = new User({
         name,
         email,
         password: hashedPassword,
-        preferences: preference,//TODO
+        preferences: preferencesParsed,
         isAdmin: !!isAdmin,
       });
   
@@ -51,6 +64,7 @@ router.post('/register', async (req, res) => {
   
       res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
+      console.error("Registration error:", err);
       res.status(500).json({ message: 'Registration error', error: err.message });
     }
   });
@@ -61,8 +75,8 @@ router.post('/login', async (req, res) => {
     try {
       const { email, password } = req.body;
   
-      // Check if email matches hardcoded user
-      const hardcoded = hardcodedUser.find(u => u.email === email);
+    // Check if email matches hardcoded user
+    const hardcoded = hardcodedUser.find(u => u.email === email);
 
     if (hardcoded) {
       if (password === hardcoded.password) {
@@ -75,7 +89,7 @@ router.post('/login', async (req, res) => {
             id: hardcoded.id,
             email: hardcoded.email,
             name: hardcoded.name,
-            preferences: "A", // optional dummy pref
+            preferences: hardcoded.preference || {},
             isAdmin: hardcoded.isAdmin,
           }
         });
@@ -97,7 +111,6 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, 'secret');
     res.json({
-      //message: 'Login successful', TODO
       token,
       user: {
         id: user._id,
@@ -114,4 +127,37 @@ router.post('/login', async (req, res) => {
   }
 });
   
-  module.exports = router;
+// get user pref
+router.get('/preferences/:userId', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).lean();
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ preferences: user.preferences || {} });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching preferences', error: err.message });
+  }
+});
+
+// update user preferences
+router.post('/preferences', async (req, res) => {
+  try {
+    const { userId, preferences } = req.body;
+    if (!userId || !preferences) {
+      return res.status(400).json({ message: 'Missing userId or preferences' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { preferences },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ message: 'Preferences updated', preferences: updatedUser.preferences });
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating preferences', error: err.message });
+  }
+});
+
+module.exports = router;
