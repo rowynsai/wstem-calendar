@@ -13,7 +13,8 @@ const hardcodedUser = [
     id: "12345",
     name: "Test User",
     preference: { "Math": true, "CPSC": false },
-    isAdmin: false
+    isAdmin: false,
+    emails: false
   },
   {
     email: "rowynsai@gmail.com",
@@ -22,6 +23,7 @@ const hardcodedUser = [
     name: "Admin User",
     preference: { "Math": true, "CPSC": false },
     isAdmin: true,
+    emails: true
   },
 ];
 
@@ -58,6 +60,7 @@ router.post('/register', async (req, res) => {
         password: hashedPassword,
         preferences: preferencesParsed,
         isAdmin: !!isAdmin,
+        emails: !!emails,
       });
   
       await newUser.save();
@@ -91,6 +94,7 @@ router.post('/login', async (req, res) => {
             name: hardcoded.name,
             preferences: hardcoded.preference || {},
             isAdmin: hardcoded.isAdmin,
+            emails: hardcoded.emails,
           }
         });
       } else {
@@ -118,6 +122,7 @@ router.post('/login', async (req, res) => {
         name: user.name,
         preferences: user.preferences || {},
         isAdmin: user.isAdmin,
+        emails: user.emails,
       }
     });
 

@@ -645,7 +645,7 @@ function CalendarPage() {
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                     src: "/wstemlogo.png",
                     alt: "Home",
-                    width: 250,
+                    width: 175,
                     height: 100,
                     className: "object-contain"
                 }, void 0, false, {
@@ -799,23 +799,12 @@ function CalendarPage() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
                 className: "mt-12 flex justify-center",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                    className: "absolute top-10 right-7 nter gap-2 hover:underline hover:underline-offset-4 text-sm",
-                    href: "mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar",
+                    className: "absolute top-10 right-7 nter gap-2 hover:underline hover:underline-offset-4 text-md",
+                    href: "https://qualtricsxmrt5r3gxmc.qualtrics.com/jfe/form/SV_6Vwj1rfNTJLSXA2",
                     target: "_blank",
                     rel: "noopener noreferrer",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                            src: "/globe.svg",
-                            alt: "Globe icon",
-                            className: "w-4 h-4"
-                        }, void 0, false, {
-                            fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 378,
-                            columnNumber: 11
-                        }, this),
-                        "Suggest an event / newsletter !"
-                    ]
-                }, void 0, true, {
+                    children: "Suggest an event / newsletter !"
+                }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
                     lineNumber: 372,
                     columnNumber: 9
@@ -829,7 +818,7 @@ function CalendarPage() {
                 className: "mt-12 flex justify-center",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                     className: "flex center nter gap-2 hover:underline hover:underline-offset-4 text-sm",
-                    href: "mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar",
+                    href: "mailto:rowynsai+calendar@gmail.com?subject=UBC Women in STEM Calendar",
                     target: "_blank",
                     rel: "noopener noreferrer",
                     children: [
@@ -839,19 +828,19 @@ function CalendarPage() {
                             className: "w-4 h-4"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 390,
+                            lineNumber: 389,
                             columnNumber: 11
                         }, this),
-                        "Contact us"
+                        "Contact us !"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 384,
+                    lineNumber: 383,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 383,
+                lineNumber: 382,
                 columnNumber: 7
             }, this)
         ]

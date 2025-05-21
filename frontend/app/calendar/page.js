@@ -273,7 +273,7 @@ export default function CalendarPage() {
         <img
           src="/wstemlogo.png"
           alt="Home"
-          width={250}
+          width={175}
           height={100}
           className="object-contain"
         />
@@ -370,12 +370,11 @@ export default function CalendarPage() {
 
       <footer className="mt-12 flex justify-center">
         <a
-          className="absolute top-10 right-7 nter gap-2 hover:underline hover:underline-offset-4 text-sm"
-          href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
+          className="absolute top-10 right-7 nter gap-2 hover:underline hover:underline-offset-4 text-md"
+          href="https://qualtricsxmrt5r3gxmc.qualtrics.com/jfe/form/SV_6Vwj1rfNTJLSXA2"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/globe.svg" alt="Globe icon" className="w-4 h-4" />
           Suggest an event / newsletter !
         </a>
       </footer>
@@ -383,12 +382,12 @@ export default function CalendarPage() {
       <footer className="mt-12 flex justify-center">
         <a
           className="flex center nter gap-2 hover:underline hover:underline-offset-4 text-sm"
-          href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
+          href="mailto:rowynsai+calendar@gmail.com?subject=UBC Women in STEM Calendar"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img src="/globe.svg" alt="Globe icon" className="w-4 h-4" />
-          Contact us
+          Contact us !
         </a>
       </footer>
     </div>

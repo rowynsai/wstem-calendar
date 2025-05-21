@@ -49,7 +49,7 @@ export default function Home() {
         <Image
           src="/wstemlogo.png"
           alt="WSTEM Logo"
-          width={250}
+          width={175}
           height={100}
           priority
         />
@@ -108,12 +108,12 @@ export default function Home() {
       <footer className="mt-12 flex justify-center">
       <a
   className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm"
-  href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
+  href="https://qualtricsxmrt5r3gxmc.qualtrics.com/jfe/form/SV_6Vwj1rfNTJLSXA2"
   target="_blank"
   rel="noopener noreferrer"
 >
   <Image src="/globe.svg" alt="Globe icon" width={16} height={16} />
-  Suggest an event / newsletter !
+  Contact us !
 </a>
       </footer>
     </div>

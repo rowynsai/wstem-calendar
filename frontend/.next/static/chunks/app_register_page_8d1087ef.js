@@ -35,10 +35,13 @@ function RegisterPage() {
     const [password, setPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [preferences, setPreferences] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(allSubjects);
     const [wantsAdmin, setWantsAdmin] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [wantsEmails, setWantsEmails] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [adminKey, setAdminKey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [isAdmin, setIsAdmin] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [emails, setEmails] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleRegister = async ()=>{
         const adminStatus = wantsAdmin && adminKey === ADMIN_SECRET_KEY;
+        const emailStatus = wantsEmail;
         setIsAdmin(adminStatus);
         try {
             const response = await fetch("http://localhost:5000/api/auth/register", {
@@ -51,7 +54,8 @@ function RegisterPage() {
                     email,
                     password,
                     preferences: preference,
-                    isAdmin: adminStatus
+                    isAdmin: adminStatus,
+                    emails: emailStatus
                 })
             });
             const data = await response.json();
@@ -80,12 +84,12 @@ function RegisterPage() {
                     priority: true
                 }, void 0, false, {
                     fileName: "[project]/app/register/page.js",
-                    lineNumber: 50,
+                    lineNumber: 53,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/register/page.js",
-                lineNumber: 49,
+                lineNumber: 52,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -100,13 +104,13 @@ function RegisterPage() {
                                 children: "Join the UBC Women in STEM Calendar!"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 62,
+                                lineNumber: 65,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/register/page.js",
-                        lineNumber: 60,
+                        lineNumber: 63,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -120,7 +124,7 @@ function RegisterPage() {
                                 className: "p-2 border border-gray-300 rounded"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 68,
+                                lineNumber: 71,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -131,7 +135,7 @@ function RegisterPage() {
                                 className: "p-2 border border-gray-300 rounded"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 75,
+                                lineNumber: 78,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -142,7 +146,7 @@ function RegisterPage() {
                                 className: "p-2 border border-gray-300 rounded"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 82,
+                                lineNumber: 85,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -150,7 +154,7 @@ function RegisterPage() {
                                 children: "Subject preferences"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 90,
+                                lineNumber: 93,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -174,19 +178,19 @@ function RegisterPage() {
                                                 }
                                             }, void 0, false, {
                                                 fileName: "[project]/app/register/page.js",
-                                                lineNumber: 94,
+                                                lineNumber: 97,
                                                 columnNumber: 7
                                             }, this),
                                             subject
                                         ]
                                     }, subject, true, {
                                         fileName: "[project]/app/register/page.js",
-                                        lineNumber: 93,
+                                        lineNumber: 96,
                                         columnNumber: 5
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 91,
+                                lineNumber: 94,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -198,14 +202,14 @@ function RegisterPage() {
                                         onChange: ()=>setWantsAdmin(!wantsAdmin)
                                     }, void 0, false, {
                                         fileName: "[project]/app/register/page.js",
-                                        lineNumber: 112,
+                                        lineNumber: 115,
                                         columnNumber: 13
                                     }, this),
                                     "Register as admin"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 111,
+                                lineNumber: 114,
                                 columnNumber: 11
                             }, this),
                             wantsAdmin && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -216,8 +220,27 @@ function RegisterPage() {
                                 className: "p-2 border border-gray-300 rounded"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 121,
+                                lineNumber: 124,
                                 columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                className: "mt-4 flex items-center gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "checkbox",
+                                        checked: wantsEmails,
+                                        onChange: ()=>setWantsEmails(!wantsEmails)
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/register/page.js",
+                                        lineNumber: 134,
+                                        columnNumber: 13
+                                    }, this),
+                                    "Opt in for email reminders (preferences only)"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/register/page.js",
+                                lineNumber: 133,
+                                columnNumber: 1
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: handleRegister,
@@ -225,7 +248,7 @@ function RegisterPage() {
                                 children: "Register"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 130,
+                                lineNumber: 142,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -234,29 +257,29 @@ function RegisterPage() {
                                 children: "Back to Login"
                             }, void 0, false, {
                                 fileName: "[project]/app/register/page.js",
-                                lineNumber: 136,
+                                lineNumber: 148,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/register/page.js",
-                        lineNumber: 67,
+                        lineNumber: 70,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/register/page.js",
-                lineNumber: 59,
+                lineNumber: 62,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/register/page.js",
-        lineNumber: 48,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 }
-_s(RegisterPage, "KPz8rG09X9YduCmzt0XSJUyjzdk=", false, function() {
+_s(RegisterPage, "dmIAgpoMByUYnjV9lV6gf+konuQ=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];

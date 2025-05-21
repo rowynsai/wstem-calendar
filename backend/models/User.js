@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
         default: {}
       },
     isAdmin: { type: Boolean, default: false },
+    emails: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('User', UserSchema);

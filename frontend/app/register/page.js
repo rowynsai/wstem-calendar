@@ -15,18 +15,21 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [preferences, setPreferences] = useState(allSubjects);
   const [wantsAdmin, setWantsAdmin] = useState(false);
+  const [wantsEmails, setWantsEmails] = useState(false);
   const [adminKey, setAdminKey] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [emails, setEmails] = useState(false);
 
   const handleRegister = async () => {
     const adminStatus = wantsAdmin && adminKey === ADMIN_SECRET_KEY;
+    const emailStatus = wantsEmail;
     setIsAdmin(adminStatus);
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, preferences: preference, isAdmin: adminStatus }),
+        body: JSON.stringify({ name, email, password, preferences: preference, isAdmin: adminStatus, emails: emailStatus}),
       });
 
       const data = await response.json();
@@ -126,6 +129,15 @@ export default function RegisterPage() {
               className="p-2 border border-gray-300 rounded"
             />
           )}
+
+<label className="mt-4 flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={wantsEmails}
+              onChange={() => setWantsEmails(!wantsEmails)}
+            />
+            Opt in for email reminders (preferences only)
+          </label>
 
           <button
             onClick={handleRegister}
