@@ -269,12 +269,12 @@ export default function CalendarPage() {
 
   return (
     <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] px-6 pt-6 pb-6">
-      <Link href="/" className="absolute top-6 left-6 cursor-pointer z-50">
+      <Link href="/" className="absolute left-0 top-0 cursor-pointer">
         <img
           src="/wstemlogo.png"
           alt="Home"
-          width={120}
-          height={38}
+          width={250}
+          height={100}
           className="object-contain"
         />
       </Link>
@@ -370,13 +370,25 @@ export default function CalendarPage() {
 
       <footer className="mt-12 flex justify-center">
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm"
+          className="absolute top-10 right-7 nter gap-2 hover:underline hover:underline-offset-4 text-sm"
           href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img src="/globe.svg" alt="Globe icon" className="w-4 h-4" />
           Suggest an event / newsletter !
+        </a>
+      </footer>
+
+      <footer className="mt-12 flex justify-center">
+        <a
+          className="flex center nter gap-2 hover:underline hover:underline-offset-4 text-sm"
+          href="mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/globe.svg" alt="Globe icon" className="w-4 h-4" />
+          Contact us
         </a>
       </footer>
     </div>

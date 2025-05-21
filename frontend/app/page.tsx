@@ -43,14 +43,14 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] p-6 sm:p-12">
+    <div className="relative min-h-screen bg-[#fdf6e3] text-black font-[family-name:var(--font-geist-sans)] px-6 pt-6 pb-6">
       {/* Logo in top-left corner */}
-      <div className="absolute top-4 left-4">
+      <div className="absolute top-0 left-0">
         <Image
           src="/wstemlogo.png"
           alt="WSTEM Logo"
-          width={120}
-          height={38}
+          width={250}
+          height={100}
           priority
         />
       </div>

@@ -648,12 +648,12 @@ function CalendarPage() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 href: "/",
-                className: "absolute top-6 left-6 cursor-pointer z-50",
+                className: "absolute left-0 top-0 cursor-pointer",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                     src: "/wstemlogo.png",
                     alt: "Home",
-                    width: 120,
-                    height: 38,
+                    width: 250,
+                    height: 100,
                     className: "object-contain"
                 }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
@@ -806,7 +806,7 @@ function CalendarPage() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
                 className: "mt-12 flex justify-center",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                    className: "flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm",
+                    className: "absolute top-10 right-7 nter gap-2 hover:underline hover:underline-offset-4 text-sm",
                     href: "mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar",
                     target: "_blank",
                     rel: "noopener noreferrer",
@@ -830,6 +830,35 @@ function CalendarPage() {
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
                 lineNumber: 371,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
+                className: "mt-12 flex justify-center",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                    className: "flex center nter gap-2 hover:underline hover:underline-offset-4 text-sm",
+                    href: "mailto:rowynsai+calendar@gmail.com?subject=Suggestion for Women in STEM UBC Calendar",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: "/globe.svg",
+                            alt: "Globe icon",
+                            className: "w-4 h-4"
+                        }, void 0, false, {
+                            fileName: "[project]/app/calendar/page.js",
+                            lineNumber: 390,
+                            columnNumber: 11
+                        }, this),
+                        "Contact us"
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/calendar/page.js",
+                    lineNumber: 384,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/app/calendar/page.js",
+                lineNumber: 383,
                 columnNumber: 7
             }, this)
         ]
