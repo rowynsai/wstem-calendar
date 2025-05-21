@@ -167,6 +167,38 @@ function SubjectDropdown({ selectedSubjects, setSelectedSubjects, user }) {
   );
 }
 
+//TODO, want a small profile picture button to appear in upper right, that when clicked takes you to user details, or (not logged in) 
+// if user not logged in, where you are able to edit you name, email, password, prefernces, adminStatus, or weeklyemail preferences 
+const ProfilePage = () => {
+  const [user, setUser] = useState({});
+  const [sessionUrl,] = useState("/api/sessions/me");
+  const history = useHistory();
+
+  useEffect(() => {
+       (async () => {
+          try {
+              const response = await axios.get(sessionUrl);
+              setUser(response.data);
+          } catch (err) {
+              history.push({
+                  pathname: "/account/login"
+              });
+          }
+      })();
+   }, []);
+
+   return (
+       <div>
+           <div>Name: {user.displayName}</div>
+           <div>Email: {user.email}</div>
+           <div>Password: {user.password}</div>
+           <div>Preferences: {user.preferences}</div>
+           <div>Admin: {user.isAdmin}</div>
+           <div>Weekly Emails: {user.emails}</div>
+       </div>
+  );
+}
+
 export default function CalendarPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [events, setEvents] = useState([]);

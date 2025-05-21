@@ -40,7 +40,7 @@ function parsePreference(preference) {
 
 // User reg
 router.post('/register', async (req, res) => {
-    const { name, email, password, preference, isAdmin, adminKey } = req.body;
+    const { name, email, password, preference, isAdmin, adminKey, emails } = req.body;
     try {
       // Check if user exists
       const existingUser = await User.findOne({ email });
