@@ -5,8 +5,10 @@ require('dotenv').config();
 
 const { google } = require('googleapis');
 const emailRoutes = require('./routes/email');
-
+const cron = require('node-cron');
+const { getEmails } = require('./emailReader');
 const app = express();
+//const fetch = require("node-fetch");
 app.use(express.json());
 app.use(cors());
 app.use('/api', emailRoutes);
@@ -17,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-// Your existing routes
+// curr routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 app.use('/api/calendar', require('./routes/calendar'));
@@ -28,7 +30,7 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
-// Endpoint to get Google OAuth URL
+// get Google OAuth URL
 app.get('/auth/google/url', (req, res) => {
   const scopes = ['https://www.googleapis.com/auth/calendar.readonly']; // example scope
   const url = oauth2Client.generateAuthUrl({
@@ -49,6 +51,17 @@ app.get('/auth/google/callback', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Authentication failed');
+  }
+});
+
+//run getEmails every other day at midnight
+// 0 min 0 hr every 2nd day of month every month every day
+cron.schedule('0 0 */2 * *', async () => {
+  console.log('Running email check...');
+  try {
+    await getEmails();
+  } catch (err) {
+    console.error('Error during email check:', err.message);
   }
 });
 

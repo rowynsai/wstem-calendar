@@ -382,10 +382,6 @@
     top: calc(var(--spacing) * 0);
   }
 
-  .top-5 {
-    top: calc(var(--spacing) * 5);
-  }
-
   .top-6 {
     top: calc(var(--spacing) * 6);
   }
@@ -398,20 +394,12 @@
     right: calc(var(--spacing) * 0);
   }
 
-  .right-6 {
-    right: calc(var(--spacing) * 6);
-  }
-
   .right-7 {
     right: calc(var(--spacing) * 7);
   }
 
   .left-0 {
     left: calc(var(--spacing) * 0);
-  }
-
-  .left-5 {
-    left: calc(var(--spacing) * 5);
   }
 
   .left-6 {
