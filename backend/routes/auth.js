@@ -3,36 +3,35 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-const ADMIN_SECRET_KEY = "iloverowyn";
 
 // Hardcoded user for testing:
 const hardcodedUser = [
     {
     email: "testeruser@gmail.com",
     password: "password123",
-    id: "12345",
+    id: "63a1f1a45b3e8c35f2a9d8e1",
     name: "Test User",
-    preference: { "Math": true, "CPSC": false },
+    preferences: { "Math": true, "CPSC": false },
     isAdmin: false,
     emails: false
   },
   {
     email: "rowynsai@gmail.com",
     password: "password123",
-    id: "67890",
+    id: "q3a1f1a45b3e8c35f2a9d8e1",
     name: "Admin User",
-    preference: { "Math": true, "CPSC": false },
+    preferences: { "Math": true, "CPSC": true },
     isAdmin: true,
     emails: true
   },
 ];
 
 // try parsing pref?
-function parsePreference(preference) {
-  if (!preference) return {};
-  if (typeof preference === 'object') return preference;
+function parsePreference(preferences) {
+  if (!preferences) return {};
+  if (typeof preferences === 'object') return preferences;
   try {
-    return JSON.parse(preference);
+    return JSON.parse(preferences);
   } catch {
     return {};
   }
@@ -40,7 +39,7 @@ function parsePreference(preference) {
 
 // User reg
 router.post('/register', async (req, res) => {
-    const { name, email, password, preference, isAdmin, adminKey, emails } = req.body;
+    const { name, email, password, preferences, isAdmin, adminKey, emails } = req.body;
     try {
       // Check if user exists
       const existingUser = await User.findOne({ email });
@@ -52,7 +51,7 @@ router.post('/register', async (req, res) => {
       }
       // Create user - hash password, save name and preference
       const hashedPassword = await bcrypt.hash(password, 10);
-      const preferencesParsed = parsePreference(preference);
+      const preferencesParsed = parsePreference(preferences);
 
       const newUser = new User({
         name,
@@ -92,7 +91,7 @@ router.post('/login', async (req, res) => {
             id: hardcoded.id,
             email: hardcoded.email,
             name: hardcoded.name,
-            preferences: hardcoded.preference || {},
+            preferences: hardcoded.preferences || {},
             isAdmin: hardcoded.isAdmin,
             emails: hardcoded.emails,
           }
@@ -113,11 +112,11 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id }, 'secret');
+    const token = jwt.sign({id: user.id }, 'secret');
     res.json({
       token,
       user: {
-        id: user._id,
+        id: user.id,
         email: user.email,
         name: user.name,
         preferences: user.preferences || {},
@@ -133,9 +132,9 @@ router.post('/login', async (req, res) => {
 });
   
 // get user pref
-router.get('/preferences/:userId', async (req, res) => {
+router.get('/preferences/:id', async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).lean();
+    const user = await User.findById(req.params.id).lean();
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json({ preferences: user.preferences || {} });
   } catch (err) {
@@ -146,13 +145,13 @@ router.get('/preferences/:userId', async (req, res) => {
 // update user preferences
 router.post('/preferences', async (req, res) => {
   try {
-    const { userId, preferences } = req.body;
-    if (!userId || !preferences) {
-      return res.status(400).json({ message: 'Missing userId or preferences' });
+    const { id, preferences } = req.body;
+    if (!id || !preferences) {
+      return res.status(400).json({ message: 'Missing id or preferences' });
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      userId,
+      id,
       { preferences },
       { new: true }
     );
@@ -164,5 +163,60 @@ router.post('/preferences', async (req, res) => {
     res.status(500).json({ message: 'Error updating preferences', error: err.message });
   }
 });
+
+// update profile
+router.post('/update', async (req, res) => {
+  try {
+    let { id, name, email, password, preferences, isAdmin, emails } = req.body;
+
+    // handle id possibly being an object like { $oid: "..." }, was in mongoDB
+    if (typeof id === 'object' && id !== null && '$oid' in id) {
+      id = id.$oid;
+    }
+
+    if (!id) {
+      return res.status(400).json({ message: 'Missing id' });
+    }
+
+    // check if id is one of the hardcoded user IDs (DONT update them)
+    const hardcodedIds = ["63a1f1a45b3e8c35f2a9d8e1", "q3a1f1a45b3e8c35f2a9d8e1"];
+    if (hardcodedIds.includes(id)) {
+      return res.status(400).json({ message: "Cannot update hardcoded user" });
+    }
+
+    const updateData = {
+      name,
+      email,
+      preferences,
+      isAdmin,
+      emails,
+    };
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateData.password = hashedPassword;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (!updatedUser) return res.status(404).json({ message: 'User not found' });
+
+    res.json({
+      message: 'User updated successfully',
+      user: {
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        preferences: updatedUser.preferences,
+        isAdmin: updatedUser.isAdmin,
+        emails: updatedUser.emails,
+      },
+    });
+  } catch (err) {
+    console.error("Profile update error:", err);
+    res.status(500).json({ message: 'Profile update failed', error: err.message });
+  }
+});
+
 
 module.exports = router;

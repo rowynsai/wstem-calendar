@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-const ADMIN_SECRET_KEY = "iloverowyn";
 const allSubjects = ["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"];
+const ADMIN_SECRET_KEY = process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY;
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -17,13 +17,19 @@ export default function RegisterPage() {
   const [wantsAdmin, setWantsAdmin] = useState(false);
   const [wantsEmails, setWantsEmails] = useState(false);
   const [adminKey, setAdminKey] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [emails, setEmails] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegister = async () => {
+    // reset error
+    setError("");
+    //(for if passwords dont match)
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     const adminStatus = wantsAdmin && adminKey === ADMIN_SECRET_KEY;
     const emailStatus = wantsEmail;
-    setIsAdmin(adminStatus);
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
@@ -87,6 +93,14 @@ export default function RegisterPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="p-2 border border-gray-300 rounded"
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="p-2 border border-gray-300 rounded"
           />
 

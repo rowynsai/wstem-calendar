@@ -106,7 +106,7 @@ function SubjectDropdown({ selectedSubjects, setSelectedSubjects, user }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: user.id,
+          userId: user._id,
           preferences: { subjects: newSelectedSubjects },
         }),
       }).catch((err) => console.error("Failed to save preferences", err));
@@ -164,38 +164,6 @@ function SubjectDropdown({ selectedSubjects, setSelectedSubjects, user }) {
         </div>
       )}
     </div>
-  );
-}
-
-//TODO, want a small profile picture button to appear in upper right, that when clicked takes you to user details, or (not logged in) 
-// if user not logged in, where you are able to edit you name, email, password, prefernces, adminStatus, or weeklyemail preferences 
-const ProfilePage = () => {
-  const [user, setUser] = useState({});
-  const [sessionUrl,] = useState("/api/sessions/me");
-  const history = useHistory();
-
-  useEffect(() => {
-       (async () => {
-          try {
-              const response = await axios.get(sessionUrl);
-              setUser(response.data);
-          } catch (err) {
-              history.push({
-                  pathname: "/account/login"
-              });
-          }
-      })();
-   }, []);
-
-   return (
-       <div>
-           <div>Name: {user.displayName}</div>
-           <div>Email: {user.email}</div>
-           <div>Password: {user.password}</div>
-           <div>Preferences: {user.preferences}</div>
-           <div>Admin: {user.isAdmin}</div>
-           <div>Weekly Emails: {user.emails}</div>
-       </div>
   );
 }
 
@@ -312,16 +280,25 @@ export default function CalendarPage() {
       </Link>
 
       <main className="p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold text-center w-full">W.STEM Calendar</h1>
-          <div className="absolute top-6 right-6">
-            <SubjectDropdown
-              selectedSubjects={selectedSubjects}
-              setSelectedSubjects={setSelectedSubjects}
-              user={user}
-            />
-          </div>
+      <div className="flex justify-between items-center mb-4 relative">
+        <a
+          href="/profile"
+          className="absolute left-0"
+        >
+          <img src="/profile.svg" alt="profile icon" className="w-10 h-10" />
+        </a>
+
+        <h1 className="text-2xl font-bold text-center w-full">Women in STEM Events</h1>
+
+        <div className="absolute right-0">
+          <SubjectDropdown
+            selectedSubjects={selectedSubjects}
+            setSelectedSubjects={setSelectedSubjects}
+            user={user}
+          />
         </div>
+      </div>
+      
         <div className="border border-gray-300 rounded overflow-hidden">
           <Calendar
             localizer={localizer}
@@ -422,6 +399,7 @@ export default function CalendarPage() {
           Contact us !
         </a>
       </footer>
+
     </div>
   );
 }

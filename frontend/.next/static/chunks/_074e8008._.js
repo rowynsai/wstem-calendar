@@ -424,7 +424,7 @@ function SubjectDropdown({ selectedSubjects, setSelectedSubjects, user }) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userId: user.id,
+                    userId: user._id,
                     preferences: {
                         subjects: newSelectedSubjects
                     }
@@ -662,37 +662,54 @@ function CalendarPage() {
                 className: "p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex justify-between items-center mb-4",
+                        className: "flex justify-between items-center mb-4 relative",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-2xl font-bold text-center w-full",
-                                children: "W.STEM Calendar"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                href: "/profile",
+                                className: "absolute left-0",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                    src: "/profile.svg",
+                                    alt: "profile icon",
+                                    className: "w-10 h-10"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/calendar/page.js",
+                                    lineNumber: 288,
+                                    columnNumber: 11
+                                }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
                                 lineNumber: 284,
-                                columnNumber: 11
+                                columnNumber: 9
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                className: "text-2xl font-bold text-center w-full",
+                                children: "Women in STEM Events"
+                            }, void 0, false, {
+                                fileName: "[project]/app/calendar/page.js",
+                                lineNumber: 291,
+                                columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "absolute top-6 right-6",
+                                className: "absolute right-0",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SubjectDropdown, {
                                     selectedSubjects: selectedSubjects,
                                     setSelectedSubjects: setSelectedSubjects,
                                     user: user
                                 }, void 0, false, {
                                     fileName: "[project]/app/calendar/page.js",
-                                    lineNumber: 286,
-                                    columnNumber: 13
+                                    lineNumber: 294,
+                                    columnNumber: 11
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
-                                lineNumber: 285,
-                                columnNumber: 11
+                                lineNumber: 293,
+                                columnNumber: 9
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/calendar/page.js",
                         lineNumber: 283,
-                        columnNumber: 9
+                        columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "border border-gray-300 rounded overflow-hidden",
@@ -745,12 +762,12 @@ function CalendarPage() {
                             }
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 294,
+                            lineNumber: 303,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 293,
+                        lineNumber: 302,
                         columnNumber: 9
                     }, this),
                     user?.isAdmin === true && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -761,12 +778,12 @@ function CalendarPage() {
                             children: "Add Event"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 342,
+                            lineNumber: 351,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 341,
+                        lineNumber: 350,
                         columnNumber: 11
                     }, this)
                 ]
@@ -783,7 +800,7 @@ function CalendarPage() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 353,
+                lineNumber: 362,
                 columnNumber: 9
             }, this),
             isTaskModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TaskModal$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -793,7 +810,7 @@ function CalendarPage() {
                 existingTask: selectedEvent
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 363,
+                lineNumber: 372,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -806,12 +823,12 @@ function CalendarPage() {
                     children: "Suggest an event / newsletter !"
                 }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 372,
+                    lineNumber: 381,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 371,
+                lineNumber: 380,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -828,19 +845,19 @@ function CalendarPage() {
                             className: "w-4 h-4"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 389,
+                            lineNumber: 398,
                             columnNumber: 11
                         }, this),
                         "Contact us !"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 383,
+                    lineNumber: 392,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 382,
+                lineNumber: 391,
                 columnNumber: 7
             }, this)
         ]
