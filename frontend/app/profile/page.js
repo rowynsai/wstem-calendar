@@ -48,9 +48,9 @@ export default function ProfilePage() {
         setWantsAdmin(storedUser.isAdmin || false);
         setWantsEmails(storedUser.emails || false);
       } catch (err) {
+        alert("Please log in or register to view profile details");
+        return;
         console.error("Invalid user data in localStorage:", err);
-        localStorage.removeItem("user"); // Clear corrupted data
-        router.push("/page"); // Redirect to login or home
       }
     }, [router]);
 
@@ -173,7 +173,7 @@ export default function ProfilePage() {
 
           {wantsAdmin && (
             <input
-              type="text"
+              type="password"
               placeholder="Enter Admin Key"
               value={adminKey}
               onChange={(e) => setAdminKey(e.target.value)}

@@ -2,6 +2,7 @@ const express = require('express');
 const Task = require('../models/Task');
 const router = express.Router();
 
+//const { createCalendarEvent } = require('./google');
 // Create Task
 router.post('/', async (req, res) => {
   try {
@@ -22,7 +23,21 @@ router.post('/', async (req, res) => {
     });
 
     await task.save();
-    res.status(201).json(task);
+
+    // create gc event
+    let calendarEvent;
+    try {
+      calendarEvent = await createCalendarEvent(task);
+    } catch (calendarError) {
+      console.error('Google Calendar event creation failed:', calendarError);
+      // TODO
+      return res.status(201).json({
+        task,
+        warning: 'Task saved but failed to create calendar event',
+      });
+    }
+
+    res.status(201).json({ task, calendarEvent });
   } catch (error) {
     res.status(500).json({ message: 'Error creating task', error: error.message });
   }

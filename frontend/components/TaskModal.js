@@ -15,7 +15,7 @@ export default function TaskModal({
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [subject, setSubject] = useState("");
-  const subjectOptions = ["Math", "CPSC", "Chem", "Biol", "Phys", "Eng"];
+  const subjectOptions = ["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"];
 
   useEffect(() => {
     if (existingTask) {
@@ -80,6 +80,7 @@ export default function TaskModal({
           className="w-full border p-2 rounded mb-2"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          readOnly={!!existingTask}
         />
         {!existingTask ? (
   <select
@@ -104,6 +105,7 @@ export default function TaskModal({
           className="w-full border p-2 rounded mb-2"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          readOnly={!!existingTask}
         />
 
         <input
@@ -111,6 +113,7 @@ export default function TaskModal({
           className="w-full border p-2 rounded mb-2"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          readOnly={!!existingTask}
         />
 
         <input
@@ -118,6 +121,7 @@ export default function TaskModal({
           className="w-full border p-2 rounded mb-2"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
+          readOnly={!!existingTask}
         />
 
         <input
@@ -125,6 +129,7 @@ export default function TaskModal({
           className="w-full border p-2 rounded mb-4"
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
+          readOnly={!!existingTask}
         />
 
         <div className="flex justify-between gap-2">
@@ -135,12 +140,26 @@ export default function TaskModal({
             Close
           </button>
 
-           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-            onClick={handleSubmit}
-          >
-            Save
-          </button>
+          {!existingTask && (
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+              onClick={handleSubmit}
+            >
+              Save
+            </button>
+          )}
+
+          {existingTask && onDelete && (
+            <button
+              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700"
+              onClick={() => {
+                onDelete(existingTask);
+                onClose();
+              }}
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </div>

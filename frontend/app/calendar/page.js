@@ -87,35 +87,35 @@ function SubjectDropdown({ selectedSubjects, setSelectedSubjects, user }) {
   const options = Object.keys(subjectColors);
 
   const toggleSubject = (subject) => {
-    if (subject === 'Select All') {
-      if (selectedSubjects.lAPSCth === options.lAPSCth) {
-        setSelectedSubjects([]);
+    setSelectedSubjects((prev) => {
+      let updated;
+      if (subject === 'Select All') {
+        updated = prev.length === options.length ? [] : options;
       } else {
-        setSelectedSubjects(options);
-      }
-    } else {
-      setSelectedSubjects((prev) =>
-        prev.includes(subject)
+        updated = prev.includes(subject)
           ? prev.filter((s) => s !== subject)
-          : [...prev, subject]
-      );
-    }
-    // if user get their saved pref
-    if (user) {
-      fetch(`http://localhost:5000/api/preferences`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user._id,
-          preferences: { subjects: newSelectedSubjects },
-        }),
-      }).catch((err) => console.error("Failed to save preferences", err));
-    }
+          : [...prev, subject];
+      }
+
+      // if user get their saved pref and update them
+      if (user) {
+        fetch(`http://localhost:5000/api/preferences`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user._id,
+            preferences: { subjects: updated },
+          }),
+        }).catch((err) => console.error("Failed to save preferences", err));
+      }
+
+      return updated;
+    });
   };
 
   const isChecked = (subject) =>
     subject === 'Select All'
-      ? selectedSubjects.lAPSCth === options.lAPSCth
+      ? selectedSubjects.length === options.length
       : selectedSubjects.includes(subject);
 
   return (
@@ -180,16 +180,22 @@ export default function CalendarPage() {
     (event) => !event.subject || selectedSubjects.includes(event.subject)
   );
 
-
   useEffect(() => {
     const fetchUser = () => {
-      try {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
+      const storedUser = localStorage.getItem("user");
+      if (storedUser && storedUser !== "undefined") {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+
+          //get pref
+          if (parsedUser.preferences?.subjects) {
+            setSelectedSubjects(parsedUser.preferences.subjects);
+          }
+        } catch (err) {
+          console.error("Error parsing user from localStorage:", err);
+          localStorage.removeItem("user");
         }
-      } catch (err) {
-        console.error("Error parsing user from localStorage:", err);
       }
     };
 
@@ -197,13 +203,13 @@ export default function CalendarPage() {
       try {
         const response = await fetch("http://localhost:5000/api/calendar");
         const data = await response.json();
-        
+
         if (data?.preferences?.subjects) {
           setSelectedSubjects(data.preferences.subjects);
         }
 
         if (Array.isArray(data.events)) {
-          // Keep description as well for modal display
+          // 
           const formattedEvents = data.events.map((event) => ({
             id: event.id,
             title: event.summary || event.title || "No Title",
@@ -235,7 +241,8 @@ export default function CalendarPage() {
         date: task.date,
         startTime: task.startTime, // "14:30"
         endTime: task.endTime,     // "15:30"
-        subject: task.subject || null, // <-- make sure TaskModal sends this if you want subject saved
+        subject: task.subject || null, // TODO check taskModal
+        user: user?.id || null,
       };
 
       const response = await fetch("http://localhost:5000/api/calendar", {
@@ -256,6 +263,9 @@ export default function CalendarPage() {
         };
         setEvents((prev) => [...prev, newEvent]);
       }
+
+      //get emails from inbox
+      await fetch('/api/email/scan', { method: 'POST' });
     } catch (err) {
       console.error("Failed to save task:", err);
     }
@@ -280,25 +290,25 @@ export default function CalendarPage() {
       </Link>
 
       <main className="p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm">
-      <div className="flex justify-between items-center mb-4 relative">
-        <a
-          href="/profile"
-          className="absolute left-0"
-        >
-          <img src="/profile.svg" alt="profile icon" className="w-10 h-10" />
-        </a>
+        <div className="flex justify-between items-center mb-4 relative">
+          <a
+            href="/profile"
+            className="absolute left-0"
+          >
+            <img src="/profile.svg" alt="profile icon" className="w-10 h-10" />
+          </a>
 
-        <h1 className="text-2xl font-bold text-center w-full">Women in STEM Events</h1>
+          <h1 className="text-2xl font-bold text-center w-full">Women in STEM Events</h1>
 
-        <div className="absolute right-0">
-          <SubjectDropdown
-            selectedSubjects={selectedSubjects}
-            setSelectedSubjects={setSelectedSubjects}
-            user={user}
-          />
+          <div className="absolute right-0">
+            <SubjectDropdown
+              selectedSubjects={selectedSubjects}
+              setSelectedSubjects={setSelectedSubjects}
+              user={user}
+            />
+          </div>
         </div>
-      </div>
-      
+
         <div className="border border-gray-300 rounded overflow-hidden">
           <Calendar
             localizer={localizer}

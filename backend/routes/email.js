@@ -2,15 +2,28 @@ const express = require('express');
 const router = express.Router();
 const { getEmails } = require('../emailReader');
 
-router.get('/read-emails', async (req, res) => {
-    try {
-      const emails = await getEmails();
-      res.json({ emails });
-    } catch (err) {
-      console.error('Error reading emails:', err);
-      res.status(500).json({ error: 'Failed to read emails', details: err.message });
-    }
-  });
-  
+router.post('/scan', async (req, res) => {
+  try {
+    await getEmails();
+    res.json({ message: 'Scanned inbox and created events.' });
+  } catch (err) {
+    console.error('Email scan failed:', err);
+    res.status(500).json({ error: 'Failed to scan inbox.' });
+  }
+});
+
+router.get('/scan', async (req, res) => {
+  try {
+    const events = await getEmails();
+    res.json({
+      message: 'Scanned inbox and created events.',
+      events, // shows event deets
+    });
+  } catch (err) {
+    console.error('Email scan failed:', err);
+    res.status(500).json({ error: 'Failed to scan inbox.' });
+  }
+});
+
 
 module.exports = router;

@@ -5,7 +5,7 @@ const chrono = require('chrono-node')
 //const fetch = require("node-fetch");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-const options = ["Math", "CPSC", "Chem", "Biol", "Phys", "Eng"];
+const options = ["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"];
 const imapConfig = {
   user: process.env.EMAIL_USER,
   password: process.env.EMAIL_PASS,

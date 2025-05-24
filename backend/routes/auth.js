@@ -145,22 +145,15 @@ router.get('/preferences/:id', async (req, res) => {
 // update user preferences
 router.post('/preferences', async (req, res) => {
   try {
-    const { id, preferences } = req.body;
-    if (!id || !preferences) {
-      return res.status(400).json({ message: 'Missing id or preferences' });
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
+    const user = await User.findByIdAndUpdate(id,
       { preferences },
       { new: true }
     );
-
-    if (!updatedUser) return res.status(404).json({ message: 'User not found' });
-
-    res.json({ message: 'Preferences updated', preferences: updatedUser.preferences });
-  } catch (err) {
-    res.status(500).json({ message: 'Error updating preferences', error: err.message });
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ success: true, preferences: user.preferences });
+  } catch (error) {
+    console.error("Error saving preferences:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

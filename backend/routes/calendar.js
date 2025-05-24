@@ -2,13 +2,17 @@ const express = require('express');
 const router = express.Router();
 const calendar = require('../google/googleClient');
 
+//TODO better minimum
+const timeMin = new Date();
+timeMin.setDate(timeMin.getDate() - 30)
+
 // GET upcoming events
 router.get('/', async (req, res) => {
   try {
     const response = await calendar.events.list({
       calendarId: process.env.calendar_id,
-      timeMin: (new Date()).toISOString(),
-      maxResults: 10,
+      timeMin: timeMin.toISOString(),
+      maxResults: 2500,
       singleEvents: true,
       orderBy: 'startTime',
     });

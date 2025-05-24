@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-
 const { google } = require('googleapis');
 const emailRoutes = require('./routes/email');
 const cron = require('node-cron');
@@ -22,7 +21,9 @@ mongoose.connect(process.env.MONGO_URI, {
 // curr routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
+app.use('/api/email', require('./routes/email'));
 app.use('/api/calendar', require('./routes/calendar'));
+//app.use('/api/preferences', require('./routes/auth/preferences'));
 // Google OAuth2 setup
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,

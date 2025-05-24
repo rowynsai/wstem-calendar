@@ -15,7 +15,7 @@ cron.schedule('0 9 * * 1', async () => {
                 data: {
                   firstName: user.name,
                   digestReports: '<ul><li>Event TODO</li>></ul>',
-                  subject: 'Your Weekly UBC Women in STEMDigest'
+                  subject: 'Your Weekly UBC Women in STEM Digest'
                 }
               });
         }
