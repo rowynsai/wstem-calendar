@@ -1,12 +1,13 @@
 const express = require('express');
 const Task = require('../models/Task');
 const router = express.Router();
+const { createCalendarEvent } = require('../google/googleUtils'); // TODO path
 
 //const { createCalendarEvent } = require('./google');
 // Create Task
 router.post('/', async (req, res) => {
   try {
-    const { title, description, date, startTime, endTime, user } = req.body;
+    const { title, description, date, startTime, endTime, user, subject } = req.body;
 
     // ensure all fields (except opt description) present
     if (!title || !date || !startTime || !endTime || !user) {
@@ -20,6 +21,7 @@ router.post('/', async (req, res) => {
       startTime,
       endTime,
       user,
+      subject,
     });
 
     await task.save();
@@ -27,7 +29,14 @@ router.post('/', async (req, res) => {
     // create gc event
     let calendarEvent;
     try {
-      calendarEvent = await createCalendarEvent(task);
+      calendarEvent = await createCalendarEvent({
+        title,
+        description,
+        date,
+        startTime,
+        endTime,
+        subject,
+      });
     } catch (calendarError) {
       console.error('Google Calendar event creation failed:', calendarError);
       // TODO

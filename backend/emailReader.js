@@ -79,11 +79,12 @@ const getEmails = () => {
     imap.getBoxes((err, boxes) => {
       console.log(JSON.stringify(boxes, null, 2));
     });
+    const emailProcessingPromises = [];
 
     imap.once('ready', () => {
       imap.openBox('INBOX', false, () => {
-        //change to UNSEEN
-        imap.search(['ALL'], (err, uids) => {
+        //change to UNSEEN TODO
+        imap.search(['UNSEEN'], (err, uids) => {
           if (err || !uids || !uids.length) {
             imap.end();
             return resolve([]); // no new emails
@@ -101,48 +102,49 @@ const getEmails = () => {
 
           f.on('message', msg => {
             msg.on('body', stream => {
-              simpleParser(stream, async (err, parsed) => {
-                if (err) {
-                  console.error("Parser error:", err);
-                  return reject(err);
-                }
-                const { from, subject, text } = parsed;
-                console.log("Parsed Email:");
-                console.log("Subject:", subject);
-                console.log("From:", from?.text || from);
-                console.log("Text body:", text?.slice(0, 100));
+              const p = simpleParser(stream)
+                .then(async parsed => {
+                  const { from, subject, text } = parsed;
+                  console.log("Parsed Email:", subject);
 
-                // check if wstem event
-                const parsedEvent = extractEventDetails(subject, text || "");
-                if (parsedEvent) {
-                  const { name, description, dateTime, subject } = parsedEvent;
+                  const parsedEvent = extractEventDetails(subject, text || "");
+                  if (parsedEvent) {
+                    const { name, description, dateTime, subject } = parsedEvent;
 
-  const dateObj = new Date(dateTime);
-  const isoDate = dateObj.toISOString().split("T")[0]; // e.g., "2025-05-22"
-  const startTime = dateObj.toISOString().split("T")[1].slice(0, 5); // "HH:MM"
-  const endTime = new Date(dateObj.getTime() + 60 * 60 * 1000) // 1 hour later
-    .toISOString()
-    .split("T")[1]
-    .slice(0, 5);
+                    const dateObj = new Date(dateTime);
+                    const isoDate = dateObj.toISOString().split("T")[0];
+                    const startTime = dateObj.toISOString().split("T")[1].slice(0, 5);
+                    const endTime = new Date(dateObj.getTime() + 60 * 60 * 1000)
+                      .toISOString()
+                      .split("T")[1]
+                      .slice(0, 5);
 
-  const newTask = {
-    title: name,
-    description,
-    date: isoDate,
-    startTime,
-    endTime,
-    user: 'admin', // TODO
-  };
+                    const newTask = {
+                      title: name,
+                      description,
+                      date: isoDate,
+                      startTime,
+                      endTime,
+                      user: "63a1f1a45b3e8c35f2a9d8e1",
+                    };
 
-  console.log("Creating task:", newTask);
+                    console.log("Creating task:", newTask);
+                    const response = await fetch("http://localhost:5000/api/tasks", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(newTask),
+                    });
 
-  await fetch("http://localhost:5000/api/tasks", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newTask),
-  });
-}
-              });
+                    if (response.ok) {
+                      results.push(newTask);
+                    } else {
+                      console.error("Failed to save task:", await response.text());
+                    }
+                  }
+                })
+                .catch(err => console.error("Parsing error:", err));
+
+              emailProcessingPromises.push(p);
             });
 
             msg.once('attributes', attrs => {
@@ -152,20 +154,22 @@ const getEmails = () => {
             });
           });
 
-          f.once('end', () => {
+          f.once('end', async () => {
+            await Promise.all(emailProcessingPromises); // wait for all messages to finish
             imap.end();
             resolve(results);
           });
 
-          f.once('error', ex => {
-            reject(ex);
+          f.once('error', err => {
+            console.error("Fetch error:", err);
+            reject(err);
           });
         });
       });
     });
 
     imap.once('error', err => {
-      console.error('IMAP Error:', err);
+      console.error("IMAP error:", err);
       reject(err);
     });
 

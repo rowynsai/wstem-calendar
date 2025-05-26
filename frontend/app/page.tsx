@@ -107,6 +107,15 @@ export default function Home() {
       {/* Footer */}
       <footer className="mt-12 flex justify-center">
       <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm px-6"
+          href="/about"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image src="/file.svg" alt="Globe icon" width={16} height={16} />
+          About us
+          </a>
+      <a
   className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm"
   href="mailto:rowynsai+calendar@gmail.com?subject=UBC Women in STEM Calendar"
   target="_blank"

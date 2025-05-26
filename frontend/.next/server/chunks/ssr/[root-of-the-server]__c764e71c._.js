@@ -32,7 +32,7 @@ const mod = __turbopack_context__.x("next/dist/server/app-render/work-async-stor
 
 module.exports = mod;
 }}),
-"[project]/app/page.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
+"[project]/app/about/page.js [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname } = __turbopack_context__;
@@ -97,12 +97,12 @@ function Home() {
                     height: 100,
                     priority: true
                 }, void 0, false, {
-                    fileName: "[project]/app/page.tsx",
+                    fileName: "[project]/app/about/page.js",
                     lineNumber: 49,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
-                fileName: "[project]/app/page.tsx",
+                fileName: "[project]/app/about/page.js",
                 lineNumber: 48,
                 columnNumber: 7
             }, this),
@@ -117,13 +117,13 @@ function Home() {
                                 className: "text-base font-normal",
                                 children: "to the UBC Women in STEM Calendar !"
                             }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
+                                fileName: "[project]/app/about/page.js",
                                 lineNumber: 62,
                                 columnNumber: 3
                             }, this)
                         ]
                     }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
+                        fileName: "[project]/app/about/page.js",
                         lineNumber: 60,
                         columnNumber: 7
                     }, this),
@@ -137,7 +137,7 @@ function Home() {
                                 onChange: (e)=>setEmail(e.target.value),
                                 className: "p-2 border border-gray-300 rounded"
                             }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
+                                fileName: "[project]/app/about/page.js",
                                 lineNumber: 68,
                                 columnNumber: 11
                             }, this),
@@ -148,7 +148,7 @@ function Home() {
                                 onChange: (e)=>setPassword(e.target.value),
                                 className: "p-2 border border-gray-300 rounded"
                             }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
+                                fileName: "[project]/app/about/page.js",
                                 lineNumber: 75,
                                 columnNumber: 11
                             }, this),
@@ -157,7 +157,7 @@ function Home() {
                                 className: "rounded-full bg-sky-400 text-white py-2 px-4 hover:bg-blue-700",
                                 children: "Login"
                             }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
+                                fileName: "[project]/app/about/page.js",
                                 lineNumber: 82,
                                 columnNumber: 11
                             }, this),
@@ -166,91 +166,25 @@ function Home() {
                                 className: "self-center rounded-full bg-sky-600 text-white py-1 px-4 hover:bg-blue-900 w-auto",
                                 children: "Register Instead"
                             }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
+                                fileName: "[project]/app/about/page.js",
                                 lineNumber: 88,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
+                        fileName: "[project]/app/about/page.js",
                         lineNumber: 67,
                         columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        className: "rounded-full bg-blue-500 text-white transition-colors flex items-center justify-center hover:bg-blue-700 font-medium text-sm h-10 px-4 w-auto",
-                        href: "/calendar",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: "Open Calendar without logging in"
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 97,
-                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
-                fileName: "[project]/app/page.tsx",
+                fileName: "[project]/app/about/page.js",
                 lineNumber: 59,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
-                className: "mt-12 flex justify-center",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        className: "flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm px-6",
-                        href: "/about",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                src: "/file.svg",
-                                alt: "Globe icon",
-                                width: 16,
-                                height: 16
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 115,
-                                columnNumber: 11
-                            }, this),
-                            "About us"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 109,
-                        columnNumber: 7
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        className: "flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm",
-                        href: "mailto:rowynsai+calendar@gmail.com?subject=UBC Women in STEM Calendar",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                src: "/globe.svg",
-                                alt: "Globe icon",
-                                width: 16,
-                                height: 16
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 124,
-                                columnNumber: 3
-                            }, this),
-                            "Contact us !"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 118,
-                        columnNumber: 7
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/page.tsx",
-                lineNumber: 108,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/app/page.tsx",
+        fileName: "[project]/app/about/page.js",
         lineNumber: 46,
         columnNumber: 5
     }, this);
@@ -259,4 +193,4 @@ function Home() {
 
 };
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__241a93d3._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__c764e71c._.js.map

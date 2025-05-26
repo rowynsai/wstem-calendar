@@ -399,6 +399,16 @@ export default function CalendarPage() {
       </footer>
 
       <footer className="mt-12 flex justify-center">
+      <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-sm px-6"
+          href="/about"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/file.svg" alt="Globe icon" className="w-4 h-4" />
+          About us
+          </a>
+
         <a
           className="flex center nter gap-2 hover:underline hover:underline-offset-4 text-sm"
           href="mailto:rowynsai+calendar@gmail.com?subject=UBC Women in STEM Calendar"
