@@ -35,7 +35,7 @@ export default function AboutUs() {
 
         <p className="text-lg">
           Founded in 2025, this website is still beta and in development, and always seeking to improve! Please provide any event or
-          newsletter suggestions to the qualtrix in the upper right, or contact us at the email below.
+          newsletter suggestions to the link in the upper right, or contact us at the email below.
         </p>
 
         <p className="text-lg">

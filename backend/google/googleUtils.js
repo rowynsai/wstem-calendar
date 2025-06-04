@@ -6,8 +6,8 @@ const createCalendarEvent = async ({ title, description, date, startTime, endTim
     throw new Error('Missing date, start time, or end time');
   }
 
-  const startDateTime = new Date(`${date}T${startTime}:00`).toISOString();
-  const endDateTime = new Date(`${date}T${endTime}:00`).toISOString();
+  const startDateTime = `${date}T${startTime}:00`;
+  const endDateTime = `${date}T${endTime}:00`;
 
   const event = {
     summary: title || 'No Title',

@@ -86,7 +86,7 @@ function AboutUs() {
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         className: "text-lg",
-                        children: "Founded in 2025, this website is still beta and in development, and always seeking to improve! Please provide any event or newsletter suggestions to the qualtrix in the upper right, or contact us at the email below."
+                        children: "Founded in 2025, this website is still beta and in development, and always seeking to improve! Please provide any event or newsletter suggestions to the link in the upper right, or contact us at the email below."
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.js",
                         lineNumber: 36,

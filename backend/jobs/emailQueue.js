@@ -4,6 +4,14 @@ const EmailLog = require('../logs/emailLogs');
 
 emailQueue.process(5, async (job) => {
   const { template, recipients, data } = job.data;
+  //debugging
+  sendEmail('digest', ['your-email@example.com'], {
+    firstName: 'Test User',
+    digestReports: '<p>This is a test event</p>',
+    subject: 'Test Email from UBC Women in STEM',
+  })
+  .then(() => console.log('Test email sent!'))
+  .catch(console.error);
 
   try {
     await sendEmail(template, recipients, data);

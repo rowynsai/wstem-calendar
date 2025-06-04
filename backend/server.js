@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+require('./jobs/scheduler');
 const { google } = require('googleapis');
 const emailRoutes = require('./routes/email');
 const cron = require('node-cron');
@@ -67,4 +68,9 @@ cron.schedule('0 0 */2 * *', async () => {
 });
 
 const PORT = process.env.PORT || 5000;
+//debugging
+// if (process.env.NODE_ENV !== 'production') {
+//   const { sendTestEmail } = require('./utils/mailer');
+//   sendTestEmail();
+// }
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

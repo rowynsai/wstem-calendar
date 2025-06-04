@@ -4,7 +4,7 @@ const calendar = require('../google/googleClient');
 
 //TODO better minimum
 const timeMin = new Date();
-timeMin.setDate(timeMin.getDate() - 30)
+timeMin.setDate(timeMin.getDate() - 60)
 
 // GET upcoming events
 router.get('/', async (req, res) => {
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 // POST new event
 router.post('/', async (req, res) => {
   try {
-    const { title, description, date, startTime, endTime, subject} = req.body;
+    const { title, description, date, startTime, endTime, location, link, subject} = req.body;
 
     if (!date || !startTime || !endTime) {
       return res.status(400).json({ error: "Missing date, start time, or end time" });

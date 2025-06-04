@@ -3,7 +3,6 @@ const Task = require('../models/Task');
 const router = express.Router();
 const { createCalendarEvent } = require('../google/googleUtils'); // TODO path
 
-//const { createCalendarEvent } = require('./google');
 // Create Task
 router.post('/', async (req, res) => {
   try {

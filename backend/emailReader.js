@@ -6,6 +6,10 @@ const chrono = require('chrono-node')
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const options = ["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"];
+const keywords = [
+  "women", "women in stem", "stem for women", "female engineers", "women in science",
+  "diversity in tech", "diversity", "gender minority", "women tech", "wim", "wics"
+];
 const imapConfig = {
   user: process.env.EMAIL_USER,
   password: process.env.EMAIL_PASS,
@@ -28,46 +32,62 @@ console.log({
 
 console.log("IMAP Config:", imapConfig);
 
-// ROUGH code following
+//get link
+const extractLink = (text) => {
+  const urls = text.match(/https?:\/\/[^\s)]+/g);
+  return urls ? urls[0] : null;
+};
+
+//get location
+const extractLocation = (text) => {
+  const locationRegex = /(Location|Where|Venue)[:\-]?\s*(.+)/i;
+  const match = text.match(locationRegex);
+  return match ? match[2].split('\n')[0].trim() : null;
+};
+
+
+// get event details
 const extractEventDetails = (subjectLine, bodyText) => {
     const lowerText = bodyText.toLowerCase();
-  
-    //filter for women
-    if (!lowerText.includes("women") && !lowerText.includes("woman")) {
-      return null;
-    }
+
+    //filter for keywords
+    if (!keywords.some(k => lowerText.includes(k))) return null;
+
 
     const event = {
-      name: subjectLine || "Untitled Event",
-      description: "", //will enter rest
-      subject: null,
+      name: subjectLine?.trim() || "Untitled Event",
+      description: "",
       dateTime: null,
+      endTime: null,
+      link: extractLink(bodyText),
+      location: extractLocation(bodyText)
     };
   
     // subject classification (simple keyword-based)
     for (const s of options) {
-      if (lowerText.includes(s.toLowerCase())) {
+      const regex = new RegExp(`\\b${s}\\b`, 'i');
+      if (regex.test(bodyText)) {
         event.subject = s;
         break;
       }
     }
-  
-    // date/time extraction
-    const parsedDate = chrono.parseDate(bodyText);
-    let dateTime = parsedDate ? parsedDate.toISOString() : null;
     
-    let description = "";
-    const paragraphs = bodyText.split(/\n\s*\n/); // split on empty lines
-
-  if (paragraphs.length > 0) {
-    // remove paragraphs that contain date/time info for description
-    description = paragraphs.filter(p => !/\b(on|at)\b/i.test(p)).join('\n').slice(0, 300);
-  } else {
-    description = bodyText.slice(0, 300);
-  }
-    event.description = description;
-    event.name = event.name.trim();
-    event.dateTime = dateTime;
+    // get date and time
+    const parsedDateResults = chrono.parse(bodyText);
+    if (parsedDateResults.length > 0) {
+      const { start, end } = parsedDateResults[0];
+      event.dateTime = start.date().toISOString();
+      if (end) event.endTime = end.date().toISOString();
+    }
+  
+    //get desciption (no times)
+    const paragraphs = bodyText.split(/\n\s*\n/);
+    const filteredParagraphs = paragraphs.filter(p => {
+      const dateMatch = chrono.parse(p);
+      return dateMatch.length === 0;
+    });
+    event.description = filteredParagraphs.join('\n').slice(0, 500);
+  
     return event;
   };
 
@@ -84,7 +104,7 @@ const getEmails = () => {
     imap.once('ready', () => {
       imap.openBox('INBOX', false, () => {
         //change to UNSEEN TODO
-        imap.search(['UNSEEN'], (err, uids) => {
+        imap.search(['ALL'], (err, uids) => {
           if (err || !uids || !uids.length) {
             imap.end();
             return resolve([]); // no new emails
@@ -109,7 +129,8 @@ const getEmails = () => {
 
                   const parsedEvent = extractEventDetails(subject, text || "");
                   if (parsedEvent) {
-                    const { name, description, dateTime, subject } = parsedEvent;
+                    const { name, description, dateTime, subject: subjectTag } = parsedEvent;
+
 
                     const dateObj = new Date(dateTime);
                     const isoDate = dateObj.toISOString().split("T")[0];

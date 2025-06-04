@@ -174,42 +174,42 @@ export default function CalendarPage() {
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false); // for read-only event details
   const [user, setUser] = useState(null);
   const [selectedSubjects, setSelectedSubjects] = useState(["Math", "CPSC", "Chem", "Biol", "Phys", "APSC"]);
+  const profileLink = user ? "/profile" : "/register";
 
   // helps w null (no subject) case
   const filteredEvents = events.filter(
-    (event) => !event.subject || selectedSubjects.includes(event.subject)
+    (event) =>
+      selectedSubjects.length === 0 || // show all if none selected
+      !event.subject ||               // events without subject always shown
+      selectedSubjects.includes(event.subject)
   );
 
   useEffect(() => {
-    const fetchUser = () => {
+    const fetchUserAndEvents = async () => {
       const storedUser = localStorage.getItem("user");
+      let userPrefs = null;
+  
       if (storedUser && storedUser !== "undefined") {
         try {
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
-
-          //get pref
+  
           if (parsedUser.preferences?.subjects) {
             setSelectedSubjects(parsedUser.preferences.subjects);
+            userPrefs = parsedUser.preferences.subjects;
           }
+
         } catch (err) {
           console.error("Error parsing user from localStorage:", err);
           localStorage.removeItem("user");
         }
       }
-    };
-
-    const fetchEvents = async () => {
+  
       try {
         const response = await fetch("http://localhost:5000/api/calendar");
         const data = await response.json();
-
-        if (data?.preferences?.subjects) {
-          setSelectedSubjects(data.preferences.subjects);
-        }
-
+  
         if (Array.isArray(data.events)) {
-          // 
           const formattedEvents = data.events.map((event) => ({
             id: event.id,
             title: event.summary || event.title || "No Title",
@@ -227,10 +227,10 @@ export default function CalendarPage() {
         setEvents([]);
       }
     };
-
-    fetchUser();
-    fetchEvents();
+  
+    fetchUserAndEvents();
   }, []);
+  
 
   const handleSaveTask = async (task) => {
     console.log("handleSaveTask triggered", task);
@@ -291,12 +291,9 @@ export default function CalendarPage() {
 
       <main className="p-6 sm:p-12 max-w-4xl mx-auto mt-20 bg-white/70 rounded-2xl shadow-xl backdrop-blur-sm">
         <div className="flex justify-between items-center mb-4 relative">
-          <a
-            href="/profile"
-            className="absolute left-0"
-          >
-            <img src="/profile.svg" alt="profile icon" className="w-10 h-10" />
-          </a>
+        <a href={profileLink} className="absolute left-0">
+          <img src="/profile.svg" alt="profile icon" className="w-10 h-10" />
+        </a>
 
           <h1 className="text-2xl font-bold text-center w-full">Women in STEM Events</h1>
 

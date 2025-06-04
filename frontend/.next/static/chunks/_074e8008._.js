@@ -561,40 +561,36 @@ function CalendarPage() {
         "Phys",
         "APSC"
     ]);
+    const profileLink = user ? "/profile" : "/register";
     // helps w null (no subject) case
-    const filteredEvents = events.filter((event)=>!event.subject || selectedSubjects.includes(event.subject));
+    const filteredEvents = events.filter((event)=>selectedSubjects.length === 0 || // show all if none selected
+        !event.subject || // events without subject always shown
+        selectedSubjects.includes(event.subject));
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CalendarPage.useEffect": ()=>{
-            const fetchUser = {
-                "CalendarPage.useEffect.fetchUser": ()=>{
+            const fetchUserAndEvents = {
+                "CalendarPage.useEffect.fetchUserAndEvents": async ()=>{
                     const storedUser = localStorage.getItem("user");
+                    let userPrefs = null;
                     if (storedUser && storedUser !== "undefined") {
                         try {
                             const parsedUser = JSON.parse(storedUser);
                             setUser(parsedUser);
-                            //get pref
                             if (parsedUser.preferences?.subjects) {
                                 setSelectedSubjects(parsedUser.preferences.subjects);
+                                userPrefs = parsedUser.preferences.subjects;
                             }
                         } catch (err) {
                             console.error("Error parsing user from localStorage:", err);
                             localStorage.removeItem("user");
                         }
                     }
-                }
-            }["CalendarPage.useEffect.fetchUser"];
-            const fetchEvents = {
-                "CalendarPage.useEffect.fetchEvents": async ()=>{
                     try {
                         const response = await fetch("http://localhost:5000/api/calendar");
                         const data = await response.json();
-                        if (data?.preferences?.subjects) {
-                            setSelectedSubjects(data.preferences.subjects);
-                        }
                         if (Array.isArray(data.events)) {
-                            // 
                             const formattedEvents = data.events.map({
-                                "CalendarPage.useEffect.fetchEvents.formattedEvents": (event)=>({
+                                "CalendarPage.useEffect.fetchUserAndEvents.formattedEvents": (event)=>({
                                         id: event.id,
                                         title: event.summary || event.title || "No Title",
                                         start: new Date(event.start?.dateTime || event.start?.date || new Date()),
@@ -602,7 +598,7 @@ function CalendarPage() {
                                         description: event.description || "",
                                         subject: event.extendedProperties?.private?.subject || null
                                     })
-                            }["CalendarPage.useEffect.fetchEvents.formattedEvents"]);
+                            }["CalendarPage.useEffect.fetchUserAndEvents.formattedEvents"]);
                             setEvents(formattedEvents);
                         } else {
                             setEvents([]);
@@ -612,9 +608,8 @@ function CalendarPage() {
                         setEvents([]);
                     }
                 }
-            }["CalendarPage.useEffect.fetchEvents"];
-            fetchUser();
-            fetchEvents();
+            }["CalendarPage.useEffect.fetchUserAndEvents"];
+            fetchUserAndEvents();
         }
     }["CalendarPage.useEffect"], []);
     const handleSaveTask = async (task)=>{
@@ -693,7 +688,7 @@ function CalendarPage() {
                         className: "flex justify-between items-center mb-4 relative",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                href: "/profile",
+                                href: profileLink,
                                 className: "absolute left-0",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                     src: "/profile.svg",
@@ -701,20 +696,20 @@ function CalendarPage() {
                                     className: "w-10 h-10"
                                 }, void 0, false, {
                                     fileName: "[project]/app/calendar/page.js",
-                                    lineNumber: 298,
-                                    columnNumber: 13
+                                    lineNumber: 295,
+                                    columnNumber: 11
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
                                 lineNumber: 294,
-                                columnNumber: 11
+                                columnNumber: 9
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                 className: "text-2xl font-bold text-center w-full",
                                 children: "Women in STEM Events"
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
-                                lineNumber: 301,
+                                lineNumber: 298,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -725,12 +720,12 @@ function CalendarPage() {
                                     user: user
                                 }, void 0, false, {
                                     fileName: "[project]/app/calendar/page.js",
-                                    lineNumber: 304,
+                                    lineNumber: 301,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
-                                lineNumber: 303,
+                                lineNumber: 300,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -790,12 +785,12 @@ function CalendarPage() {
                             }
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 313,
+                            lineNumber: 310,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 312,
+                        lineNumber: 309,
                         columnNumber: 9
                     }, this),
                     user?.isAdmin === true && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -806,12 +801,12 @@ function CalendarPage() {
                             children: "Add Event"
                         }, void 0, false, {
                             fileName: "[project]/app/calendar/page.js",
-                            lineNumber: 361,
+                            lineNumber: 358,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 360,
+                        lineNumber: 357,
                         columnNumber: 11
                     }, this)
                 ]
@@ -828,7 +823,7 @@ function CalendarPage() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 372,
+                lineNumber: 369,
                 columnNumber: 9
             }, this),
             isTaskModalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$TaskModal$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -838,7 +833,7 @@ function CalendarPage() {
                 existingTask: selectedEvent
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 382,
+                lineNumber: 379,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -851,12 +846,12 @@ function CalendarPage() {
                     children: "Suggest an event / newsletter !"
                 }, void 0, false, {
                     fileName: "[project]/app/calendar/page.js",
-                    lineNumber: 391,
+                    lineNumber: 388,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 390,
+                lineNumber: 387,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -874,14 +869,14 @@ function CalendarPage() {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
-                                lineNumber: 408,
+                                lineNumber: 405,
                                 columnNumber: 11
                             }, this),
                             "About us"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 402,
+                        lineNumber: 399,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -896,20 +891,20 @@ function CalendarPage() {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/calendar/page.js",
-                                lineNumber: 418,
+                                lineNumber: 415,
                                 columnNumber: 11
                             }, this),
                             "Contact us !"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/calendar/page.js",
-                        lineNumber: 412,
+                        lineNumber: 409,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/calendar/page.js",
-                lineNumber: 401,
+                lineNumber: 398,
                 columnNumber: 7
             }, this)
         ]
