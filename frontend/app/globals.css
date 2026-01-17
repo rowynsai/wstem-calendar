@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Dark mode (optional, future-proof) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f3d2e;
+    --foreground: #ffffff;
+  }
+}
+
+/* ---------- Base page styling ---------- */
+body {
+  background-color: #3c4d69;
+  color: #3c1542;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Tarot Deck",
+    "short_name": "Tarot",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#3c4d69",
+    "theme_color": "#683b50",
+    "purple": "#3c1542",
+    "creme": "#d6b999",
+    "icons": [
+      {
+        "src": "/logo.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
