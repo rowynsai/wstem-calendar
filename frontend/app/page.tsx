@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import cardSpread from "../public/cards/card-spread.png";
 
 type User = {
   username: string;
@@ -11,75 +9,83 @@ type User = {
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("user");
-    if (stored) setUser(JSON.parse(stored));
+    setMounted(true);
+    // In a real app, check authentication from context/state management
+    // For demo purposes, using a mock user
+    setUser({ username: "Seeker" });
   }, []);
 
-  return (
-    <main className="min-h-screen text-white flex flex-col justify-between p-6">
+  if (!mounted) {
+    return (
+      <main className="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-indigo-950 text-white flex items-center justify-center">
+        <div className="animate-pulse text-xl">Loading...</div>
+      </main>
+    );
+  }
 
-      {/* ───────── Top Bar ───────── */}
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-indigo-950 text-white flex flex-col justify-between p-6">
+
+      {/* Top Bar */}
       <header className="flex items-center justify-between">
+        <button
+          onClick={() => console.log('Navigate to home')}
+          aria-label="Home"
+          className="w-16 h-16 hover:opacity-80 transition-opacity"
+        >
+          <Image src="/logo.png" alt="Logo" width={64} height={64} />
+        </button>
+
         {user ? (
-          <span className="text-sm opacity-90">
+          <span className="text-sm opacity-90 font-light">
             Welcome, {user.username}
           </span>
         ) : (
           <button
-            onClick={() => router.push("/login")}
-            className="text-sm px-4 py-1 rounded-full bg-white text-black"
+            onClick={() => console.log('Navigate to login')}
+            className="text-sm px-4 py-2 rounded-full bg-white text-indigo-900 font-medium hover:bg-opacity-90 transition-all"
           >
             Log in
           </button>
         )}
-
-        <button
-          onClick={() => router.push("/settings")}
-          aria-label="Settings"
-        >
-          <Image
-            src="/icons/settings.svg"
-            alt="Settings"
-            width={28}
-            height={28}
-          />
-        </button>
       </header>
 
-      {/* ───────── Center Deck ───────── */}
+      {/* Center Deck */}
       <section
-        className="flex flex-col items-center gap-6 cursor-pointer select-none"
-        onClick={() => router.push("/reading")}
+        className="flex flex-col items-center gap-8 cursor-pointer select-none group"
+        onClick={() => console.log('Navigate to reading')}
       >
-        <div className="relative">
-          <Image
-            src={cardSpread}
-            alt="Tarot deck"
-            width={220}
+        <div className="relative transform transition-transform duration-300 group-hover:scale-105">
+          <Image 
+            src="/cards/card-spread.png" 
+            alt="Tarot deck" 
+            width={220} 
             height={360}
             priority
             className="rounded-xl shadow-2xl"
           />
         </div>
 
-        <p className="text-lg tracking-wide opacity-90">
-          Tap the deck to begin
-        </p>
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-light tracking-wider">Begin a Reading</h1>
+          <p className="text-lg tracking-wide opacity-90 font-light">
+            Tap the deck to begin
+          </p>
+        </div>
       </section>
 
-      {/* ───────── Bottom Navigation ───────── */}
-      <footer className="flex justify-around items-center text-xs opacity-80">
+      {/* Bottom Navigation */}
+      <footer className="flex justify-around items-center pt-4">
         <button
-          onClick={() => router.push("/daily")}
-          className="flex flex-col items-center gap-1"
+          onClick={() => console.log('Navigate to daily card')}
+          className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          <Image src="/icons/daily.svg" alt="Daily" width={24} height={24} />
-          Draw a Card of the Day
+          <Image src="/sun.png" alt="Daily card" width={64} height={64} />
+          <span className="text-sm opacity-80 font-light">Card of the Day</span>
         </button>
-
       </footer>
 
     </main>
